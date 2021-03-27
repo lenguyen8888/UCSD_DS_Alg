@@ -1,18 +1,31 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class MaxPairwiseProduct {
-    static int getMaxPairwiseProduct(int[] numbers) {
-        int max_product = 0;
+    static long getMaxPairwiseProduct(int[] numbers) {
+
         int n = numbers.length;
 
-        for (int first = 0; first < n; ++first) {
-            for (int second = first + 1; second < n; ++second) {
-                max_product = Math.max(max_product,
-                    numbers[first] * numbers[second]);
-            }
+//        for (int first = 0; first < n; ++first) {
+//            for (int second = first + 1; second < n; ++second) {
+//                max_product = Math.max(max_product,
+//                    numbers[first] * numbers[second]);
+//            }
+//        }
+        if (n < 2)
+            throw new IllegalArgumentException();
+
+        int firstMax = Math.max(numbers[0], numbers[1]);
+        int secondMax = Math.min(numbers[0], numbers[1]);
+        for (int i = 2; i < n; i++) {
+            secondMax = Math.max(secondMax, Math.min(firstMax, numbers[i]));
+            firstMax = Math.max(firstMax, numbers[i]);
         }
 
+        long max_product = (long) firstMax * secondMax;
         return max_product;
     }
 
@@ -32,8 +45,7 @@ public class MaxPairwiseProduct {
 
         FastScanner(InputStream stream) {
             try {
-                br = new BufferedReader(new
-                    InputStreamReader(stream));
+                br = new BufferedReader(new InputStreamReader(stream));
             } catch (Exception e) {
                 e.printStackTrace();
             }
