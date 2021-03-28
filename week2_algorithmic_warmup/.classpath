@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="1_fibonacci_number"/>
+	<classpathentry kind="src" path="2_last_digit_of_fibonacci_number"/>
+	<classpathentry kind="src" path="3_greatest_common_divisor"/>
+	<classpathentry kind="src" path="4_least_common_multiple"/>
+	<classpathentry kind="src" path="5_fibonacci_number_again"/>
+	<classpathentry kind="src" path="6_last_digit_of_the_sum_of_fibonacci_numbers"/>
+	<classpathentry kind="src" path="7_last_digit_of_the_sum_of_fibonacci_numbers_again"/>
+	<classpathentry kind="src" path="8_last_digit_of_the_sum_of_squares_of_fibonacci_numbers"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
