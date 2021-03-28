@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="1_money_change"/>
+	<classpathentry kind="src" path="2_maximum_value_of_the_loot"/>
+	<classpathentry kind="src" path="3_car_fueling"/>
+	<classpathentry kind="src" path="4_maximum_advertisement_revenue"/>
+	<classpathentry kind="src" path="5_collecting_signatures"/>
+	<classpathentry kind="src" path="6_maximum_number_of_prizes"/>
+	<classpathentry kind="src" path="7_maximum_salary"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
