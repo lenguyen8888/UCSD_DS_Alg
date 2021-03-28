@@ -1,63 +1,40 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class FractionalKnapsack {
 
-    static final long ROUND_SCALE = 10000;
+    static final boolean USE_CLASS_SORT = false;
+    // Using sort would result in this error:
+    // Failed case #4/13: Wrong answer
+    // wrong output format: list index out of range
+    // (Time used: 0.07/1.50, memory used: 25632768/671088640.)
 
-    static private class itemVal implements Comparable<itemVal> {
-        private int weight;
-        private final double unitPrice;
-
-        itemVal(int value, int weight) {
-            if (weight <= 0)
-                throw new IllegalArgumentException("expected positive weight got " + weight);
-            if (value <= 0)
-                throw new IllegalArgumentException("expected positive value got " + value);
-            this.weight = weight;
-            unitPrice = (double) value / weight;
-        }
-
-        @Override
-        public int compareTo(itemVal o) {
-            // TODO Auto-generated method stub
-            return Double.compare(o.unitPrice, this.unitPrice);
-        }
-
-        public int getWeight() {
-            return weight;
-        }
-
-        public void setWeight(int weight) {
-            this.weight = weight;
-        }
-
-        public double getUnitPrice() {
-            return unitPrice;
-        }
-
-        public int getValue() {
-            return (int) Math.round(unitPrice * weight);
-        }
-
+    // Simple search implementation (not using sort)
+    private static int findHighestPIndex(double[] prices) {
+        double maxP = Double.MIN_VALUE;
+        int maxI = 0;
+        for (int i = 0; i < prices.length; ++i)
+            if (maxP < prices[i]) {
+                maxI = i;
+                maxP = prices[i];
+            }
+        return maxI;
     }
 
     private static double getOptimalValue(int capacity, int[] values, int[] weights) {
         double value = 0;
         // write your code here
 
-        itemVal[] items = new itemVal[values.length];
-        for (int i = 0; i < values.length; ++i)
-            items[i] = new itemVal(values[i], weights[i]);
-        Arrays.sort(items);
-        for (int i = 0; i < items.length; ++i) {
-            itemVal item = items[i];
-            if (capacity > 0) {
-                int itemW = Math.min(capacity, item.getWeight());
-//                item.setWeight(item.getWeight() - itemW);
-                capacity -= itemW;
-                value += (itemW * item.getUnitPrice());
-            }
+        int numItems = values.length;
+        double[] unitP = new double[numItems];
+        for (int i = 0; i < numItems; ++i)
+            unitP[i] = (double) values[i] / weights[i];
+        for (int i = 0; i < numItems && capacity > 0; ++i) {
+            int maxI = findHighestPIndex(unitP);
+            double maxP = unitP[maxI];
+            unitP[maxI] = 0.0; // Taken the unit out of consideration
+            int w = Math.min(capacity, weights[maxI]);
+            capacity -= w;
+            value += (w * maxP);
         }
         return value;
     }
@@ -72,7 +49,7 @@ public class FractionalKnapsack {
             values[i] = scanner.nextInt();
             weights[i] = scanner.nextInt();
         }
-        // System.out.println(getOptimalValue(capacity, values, weights));
+
         double val = getOptimalValue(capacity, values, weights);
         System.out.println(String.format("%.4f", val));
 
