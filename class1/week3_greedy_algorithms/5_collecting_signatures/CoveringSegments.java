@@ -15,7 +15,6 @@ public class CoveringSegments {
         // from text book
         Arrays.sort(tempS);
         LinkedList<Integer> pointL = new LinkedList<Integer>();
-        Segment boundS;
 
         int prevEnd = Integer.MIN_VALUE;
         for (int i = 0; i < tempS.length; i++) {
