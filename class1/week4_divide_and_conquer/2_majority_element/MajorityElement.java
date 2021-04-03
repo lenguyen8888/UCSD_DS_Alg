@@ -1,5 +1,9 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class MajorityElement {
     private static int getMajorityElement(int[] a, int left, int right) {
@@ -9,7 +13,24 @@ public class MajorityElement {
         if (left + 1 == right) {
             return a[left];
         }
-        //write your code here
+        // write your code here
+        return -1;
+    }
+
+    private static int getMajorityVal(int[] a, int left, int right) {
+        int[] tempA = new int[right - left];
+        for (int i = 0; i < tempA.length; i++)
+            tempA[i] = a[left + i];
+        Arrays.sort(tempA);
+        // sort array in n*log(n) time
+        // Now if the element a distance length/2 away is the same
+        // we have at least length/2 + 1 elements with that value
+        int halfSize = (tempA.length) / 2;
+
+        for (int i = 0; i < (tempA.length - halfSize); i++) {
+            if (tempA[i] == tempA[i + halfSize])
+                return tempA[i];
+        }
         return -1;
     }
 
@@ -20,12 +41,13 @@ public class MajorityElement {
         for (int i = 0; i < n; i++) {
             a[i] = scanner.nextInt();
         }
-        if (getMajorityElement(a, 0, a.length) != -1) {
+        if (getMajorityVal(a, 0, a.length) != -1) {
             System.out.println(1);
         } else {
             System.out.println(0);
         }
     }
+
     static class FastScanner {
         BufferedReader br;
         StringTokenizer st;
@@ -54,4 +76,3 @@ public class MajorityElement {
         }
     }
 }
-

@@ -2,9 +2,31 @@ import java.util.Scanner;
 
 public class PointsAndSegments {
 
+    private static class OverlapSeg implements Comparable<OverlapSeg> {
+        int start, end;
+
+        OverlapSeg(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        OverlapSeg(OverlapSeg o) {
+            this.start = o.start;
+            this.end = o.end;
+        }
+
+        @Override
+        public int compareTo(OverlapSeg o) {
+            int diff = Integer.compare(this.start, o.start);
+            if (diff != 0)
+                return diff;
+            return Integer.compare(this.end, o.end);
+        }
+    }
+
     private static int[] fastCountSegments(int[] starts, int[] ends, int[] points) {
         int[] cnt = new int[points.length];
-        //write your code here
+        // write your code here
         return cnt;
     }
 
@@ -35,11 +57,10 @@ public class PointsAndSegments {
         for (int i = 0; i < m; i++) {
             points[i] = scanner.nextInt();
         }
-        //use fastCountSegments
+        // use fastCountSegments
         int[] cnt = naiveCountSegments(starts, ends, points);
         for (int x : cnt) {
             System.out.print(x + " ");
         }
     }
 }
-
