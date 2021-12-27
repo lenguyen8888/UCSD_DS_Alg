@@ -9,12 +9,6 @@ public class MaxPairwiseProduct {
 
         int n = numbers.length;
 
-//        for (int first = 0; first < n; ++first) {
-//            for (int second = first + 1; second < n; ++second) {
-//                max_product = Math.max(max_product,
-//                    numbers[first] * numbers[second]);
-//            }
-//        }
         if (n < 2)
             throw new IllegalArgumentException();
 

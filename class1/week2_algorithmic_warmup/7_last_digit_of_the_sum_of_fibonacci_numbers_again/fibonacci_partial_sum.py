@@ -2,18 +2,18 @@
 import sys
 
 def fibonacci_partial_sum_naive(from_, to):
-    sum = 0
+    _sum = 0
 
     current = 0
-    next  = 1
+    _next  = 1
 
     for i in range(to + 1):
         if i >= from_:
-            sum += current
+            _sum += current
 
-        current, next = next, current + next
+        current, _next = _next, current + _next
 
-    return sum % 10
+    return _sum % 10
 
 
 if __name__ == '__main__':

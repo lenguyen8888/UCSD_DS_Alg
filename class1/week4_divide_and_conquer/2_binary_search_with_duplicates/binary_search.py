@@ -1,5 +1,6 @@
 def binary_search(keys, query):
     # write your code here
+    pass
 
 
 if __name__ == '__main__':
