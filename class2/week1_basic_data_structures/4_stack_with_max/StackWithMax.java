@@ -1,5 +1,8 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Stack;
+import java.util.StringTokenizer;
 
 public class StackWithMax {
     class FastScanner {
@@ -15,6 +18,7 @@ public class StackWithMax {
                 tok = new StringTokenizer(in.readLine());
             return tok.nextToken();
         }
+
         int nextInt() throws IOException {
             return Integer.parseInt(next());
         }
@@ -24,16 +28,26 @@ public class StackWithMax {
         FastScanner scanner = new FastScanner();
         int queries = scanner.nextInt();
         Stack<Integer> stack = new Stack<Integer>();
+        Stack<Integer> maxValues = new Stack<Integer>();
 
         for (int qi = 0; qi < queries; ++qi) {
             String operation = scanner.next();
             if ("push".equals(operation)) {
                 int value = scanner.nextInt();
                 stack.push(value);
+
+                if (maxValues.isEmpty())
+                    maxValues.push(value);
+                else if (value >= maxValues.peek())
+                    maxValues.push(value);
+
             } else if ("pop".equals(operation)) {
-                stack.pop();
+
+                int value = stack.pop();
+                if (value == maxValues.peek())
+                    maxValues.pop();
             } else if ("max".equals(operation)) {
-                System.out.println(Collections.max(stack));
+                System.out.println(maxValues.peek());
             }
         }
     }

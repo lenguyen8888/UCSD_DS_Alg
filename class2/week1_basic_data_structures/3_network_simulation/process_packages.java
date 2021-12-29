@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -25,16 +26,31 @@ class Response {
 class Buffer {
     public Buffer(int size) {
         this.size_ = size;
-        this.finish_time_ = new ArrayList<Integer>();
+        this.finish_time_ = new ArrayDeque<Integer>();
     }
 
     public Response Process(Request request) {
         // write your code here
-        return new Response(false, -1);
+
+        // remove all packets that should have been done
+        while (!finish_time_.isEmpty() && (finish_time_.peek() <= request.arrival_time)) {
+            finish_time_.pop();
+        }
+
+        // if we run out out space => we drop the packet
+        if (finish_time_.size() >= size_)
+            return new Response(true, -1);
+
+        int start_at = request.arrival_time;
+        if (!finish_time_.isEmpty())
+            start_at = finish_time_.peekLast();
+        int finish_at = start_at + request.process_time;
+        finish_time_.add(finish_at);
+        return new Response(false, start_at);
     }
 
     private int size_;
-    private ArrayList<Integer> finish_time_;
+    private ArrayDeque<Integer> finish_time_;
 }
 
 class process_packages {
