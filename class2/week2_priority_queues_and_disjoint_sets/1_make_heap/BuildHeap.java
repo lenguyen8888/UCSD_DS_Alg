@@ -1,6 +1,9 @@
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -19,36 +22,61 @@ public class BuildHeap {
         int n = in.nextInt();
         data = new int[n];
         for (int i = 0; i < n; ++i) {
-          data[i] = in.nextInt();
+            data[i] = in.nextInt();
         }
     }
 
     private void writeResponse() {
         out.println(swaps.size());
         for (Swap swap : swaps) {
-          out.println(swap.index1 + " " + swap.index2);
+            out.println(swap.index1 + " " + swap.index2);
         }
     }
 
-    private void generateSwaps() {
-      swaps = new ArrayList<Swap>();
-      // The following naive implementation just sorts 
-      // the given sequence using selection sort algorithm
-      // and saves the resulting sequence of swaps.
-      // This turns the given array into a heap, 
-      // but in the worst case gives a quadratic number of swaps.
-      //
-      // TODO: replace by a more efficient implementation
-      for (int i = 0; i < data.length; ++i) {
-        for (int j = i + 1; j < data.length; ++j) {
-          if (data[i] > data[j]) {
-            swaps.add(new Swap(i, j));
+//    private void generateSwaps() {
+//      swaps = new ArrayList<Swap>();
+//      // The following naive implementation just sorts 
+//      // the given sequence using selection sort algorithm
+//      // and saves the resulting sequence of swaps.
+//      // This turns the given array into a heap, 
+//      // but in the worst case gives a quadratic number of swaps.
+//      //
+//      // TODO: replace by a more efficient implementation
+//      for (int i = 0; i < data.length; ++i) {
+//        for (int j = i + 1; j < data.length; ++j) {
+//          if (data[i] > data[j]) {
+//            swaps.add(new Swap(i, j));
+//            int tmp = data[i];
+//            data[i] = data[j];
+//            data[j] = tmp;
+//          }
+//        }
+//      }
+//    }
+
+    private void siftDown(int i) {
+        int minIndex = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+        if (left < data.length && data[left] < data[minIndex])
+            minIndex = left;
+        if (right < data.length && data[right] < data[minIndex])
+            minIndex = right;
+        if (minIndex != i) {
+            swaps.add(new Swap(i, minIndex));
             int tmp = data[i];
-            data[i] = data[j];
-            data[j] = tmp;
-          }
+            data[i] = data[minIndex];
+            data[minIndex] = tmp;
+            siftDown(minIndex);
         }
-      }
+
+    }
+
+    private void generateSwaps() {
+        swaps = new ArrayList<Swap>();
+        for (int i = data.length / 2 - 1; i >= 0; --i) {
+            siftDown(i);
+        }
     }
 
     public void solve() throws IOException {
