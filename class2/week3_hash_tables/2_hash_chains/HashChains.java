@@ -1,8 +1,12 @@
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.Vector;
 
 public class HashChains {
 
@@ -15,6 +19,8 @@ public class HashChains {
     private int prime = 1000000007;
     private int multiplier = 263;
 
+    private Vector<ArrayList<String>> table;
+
     public static void main(String[] args) throws IOException {
         new HashChains().processQueries();
     }
@@ -23,7 +29,7 @@ public class HashChains {
         long hash = 0;
         for (int i = s.length() - 1; i >= 0; --i)
             hash = (hash * multiplier + s.charAt(i)) % prime;
-        return (int)hash % bucketCount;
+        return (int) hash % bucketCount;
     }
 
     private Query readQuery() throws IOException {
@@ -43,29 +49,60 @@ public class HashChains {
         // out.flush();
     }
 
+//    private void processQuery(Query query) {
+//        switch (query.type) {
+//            case "add":
+//                if (!elems.contains(query.s))
+//                    elems.add(0, query.s);
+//                break;
+//            case "del":
+//                if (elems.contains(query.s))
+//                    elems.remove(query.s);
+//                break;
+//            case "find":
+//                writeSearchResult(elems.contains(query.s));
+//                break;
+//            case "check":
+//                for (String cur : elems)
+//                    if (hashFunc(cur) == query.ind)
+//                        out.print(cur + " ");
+//                out.println();
+//                // Uncomment the following if you want to play with the program interactively.
+//                // out.flush();
+//                break;
+//            default:
+//                throw new RuntimeException("Unknown query: " + query.type);
+//        }
+//    }
+
     private void processQuery(Query query) {
+        List<String> mList;
         switch (query.type) {
-            case "add":
-                if (!elems.contains(query.s))
-                    elems.add(0, query.s);
-                break;
-            case "del":
-                if (elems.contains(query.s))
-                    elems.remove(query.s);
-                break;
-            case "find":
-                writeSearchResult(elems.contains(query.s));
-                break;
-            case "check":
-                for (String cur : elems)
-                    if (hashFunc(cur) == query.ind)
-                        out.print(cur + " ");
-                out.println();
-                // Uncomment the following if you want to play with the program interactively.
-                // out.flush();
-                break;
-            default:
-                throw new RuntimeException("Unknown query: " + query.type);
+        case "add":
+            mList = table.get(hashFunc(query.s));
+            if (!mList.contains(query.s))
+                mList.add(0, query.s);
+            break;
+        case "del":
+            mList = table.get(hashFunc(query.s));
+            if (mList.contains(query.s))
+                mList.remove(query.s);
+            break;
+        case "find":
+            mList = table.get(hashFunc(query.s));
+            writeSearchResult(mList.contains(query.s));
+            break;
+        case "check":
+            mList = table.get(query.ind);
+            for (String cur : mList)
+                if (hashFunc(cur) == query.ind)
+                    out.print(cur + " ");
+            out.println();
+            // Uncomment the following if you want to play with the program interactively.
+            // out.flush();
+            break;
+        default:
+            throw new RuntimeException("Unknown query: " + query.type);
         }
     }
 
@@ -74,11 +111,22 @@ public class HashChains {
         in = new FastScanner();
         out = new PrintWriter(new BufferedOutputStream(System.out));
         bucketCount = in.nextInt();
+        initTable();
         int queryCount = in.nextInt();
         for (int i = 0; i < queryCount; ++i) {
             processQuery(readQuery());
         }
         out.close();
+    }
+
+    /**
+     * 
+     */
+    private void initTable() {
+        table = new Vector<>();
+        for (int i = 0; i < bucketCount; ++i) {
+            table.add(new ArrayList<>());
+        }
     }
 
     static class Query {
