@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class is_bst {
@@ -48,8 +50,26 @@ public class is_bst {
             }
         }
 
+        private void treeInOrder(List<Integer> nodeValList, int node) {
+            if (node == -1)
+                return;
+            treeInOrder(nodeValList, tree[node].left);
+            nodeValList.add(tree[node].key);
+            treeInOrder(nodeValList, tree[node].right);
+        }
+
+//        boolean isBinarySearchTree() {
+//            // Implement correct algorithm here
+//            return true;
+//        }
         boolean isBinarySearchTree() {
-            // Implement correct algorithm here
+            if (nodes == 0)
+                return true;
+            List<Integer> nodeVal = new ArrayList<>();
+            treeInOrder(nodeVal, 0);
+            for (int i = 1; i < nodeVal.size(); ++i)
+                if (nodeVal.get(i) <= nodeVal.get(i - 1))
+                    return false;
             return true;
         }
     }

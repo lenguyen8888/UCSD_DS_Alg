@@ -48,10 +48,32 @@ public class is_bst_hard {
             }
         }
 
+        // minVal and maxVal are long to avoid the actual key is
+        // Integer.MIN_VALUE or
+        // Integer.MAX_VALUE
+        private boolean checkTree(int root, long minVal, long maxVal) {
+            boolean retVal;
+            retVal = true;
+            if (nodes == 0)
+                return true;
+            if (tree[root].key < minVal || tree[root].key >= maxVal)
+                return false;
+            if (tree[root].left != -1)
+                retVal &= checkTree(tree[root].left, minVal, tree[root].key);
+            if (tree[root].right != -1)
+                retVal &= checkTree(tree[root].right, tree[root].key, maxVal);
+            return retVal;
+        }
+
+//        boolean isBinarySearchTree() {
+//            // Implement correct algorithm here
+//            return true;
+//        }
         boolean isBinarySearchTree() {
             // Implement correct algorithm here
-            return true;
+            return checkTree(0, Long.MIN_VALUE, Long.MAX_VALUE);
         }
+
     }
 
     static public void main(String[] args) throws IOException {
