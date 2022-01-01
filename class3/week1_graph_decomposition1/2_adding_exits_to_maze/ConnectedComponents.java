@@ -6,12 +6,10 @@ import java.util.Scanner;
 public class ConnectedComponents {
     private static HashMap<Integer, Integer> visited;
     private static List<Integer> gAdj[];
-    private static List<Integer> reach;
     private static int connCount;
     private static int nVertices;
 
     private static void visit(int node) {
-        reach.add(node);
         visited.put(node, 1);
     }
 
@@ -26,7 +24,6 @@ public class ConnectedComponents {
 
     private static void initExplore() {
         visited = new HashMap<>();
-        reach = new ArrayList<>();
         connCount = 0;
     }
 
@@ -37,8 +34,6 @@ public class ConnectedComponents {
 //    }
 
     private static int numberOfComponents(ArrayList<Integer>[] adj) {
-        int result = 0;
-        // write your code here
         initExplore();
         for (int i = 0; i < nVertices; ++i) {
             if (!visited.containsKey(i)) {
