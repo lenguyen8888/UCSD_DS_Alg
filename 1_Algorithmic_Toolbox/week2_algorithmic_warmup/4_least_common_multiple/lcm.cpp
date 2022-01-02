@@ -8,6 +8,18 @@ long long lcm_naive(int a, int b) {
   return (long long) a * b;
 }
 
+int gcd(int a, int b) {
+    if (a > b)
+        return gcd(b, a);
+    if (a % b == 0)
+        return b;
+    return gcd(b % a, a);
+}
+
+long long lcm(int a, int b) {
+    return (long long)a / gcd(a,b) * b;
+}
+
 int main() {
   int a, b;
   std::cin >> a >> b;
