@@ -33,7 +33,7 @@ public class FibonacciHuge {
         return f_val;
     }
 
-    private static long calcFibPeriod(long m) {
+    private static long calcFibonacciPeriod(long m) {
         if (m < 2 || 1000 < m) {
             throw new IllegalArgumentException("m out of range [2,100] " + m);
         }
@@ -52,13 +52,25 @@ public class FibonacciHuge {
     }
 
     private static long getFibonacciHuge(long n, long m) {
-        long pisanoPer = calcFibPeriod(m);
+        long pisanoPer = calcFibonacciPeriod(m);
         long nVal = n % pisanoPer;
         return fastFibonacciMod(nVal, m);
     }
 
     public static void main(String[] args) {
+        quick_test();
+        Scanner scanner = new Scanner(System.in);
+        long n = scanner.nextLong();
+        long m = scanner.nextLong();
+        System.out.println(getFibonacciHuge(n, m));
+    }
+
+    /**
+     * 
+     */
+    private static void quick_test() {
         if (FULL_TEST) {
+
             boolean testPassed = true;
             for (long n = 0; n < TEST_RANGE; ++n) {
                 long naiveVal = getFibonacciHugeNaive(n, TEST_MOD);
@@ -72,12 +84,6 @@ public class FibonacciHuge {
 
             if (testPassed)
                 System.out.println("Ok, test passed");
-
-        } else {
-            Scanner scanner = new Scanner(System.in);
-            long n = scanner.nextLong();
-            long m = scanner.nextLong();
-            System.out.println(getFibonacciHuge(n, m));
         }
     }
 }

@@ -35,6 +35,18 @@ public class FibonacciLastDigit {
     }
 
     public static void main(String[] args) {
+        quick_test();
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int c = fastFibonacciLastDigit(n);
+        System.out.println(c);
+        scanner.close();
+    }
+
+    /**
+     * 
+     */
+    private static void quick_test() {
         if (FULL_TEST) {
             int testLimit = SKIP_SLOW ? FULL_TEST_MAX_N * 10 : FULL_TEST_MAX_N;
             boolean testPassed = true;
@@ -56,12 +68,6 @@ public class FibonacciLastDigit {
                 System.out.println("Test passed");
             else
                 System.out.println("Test failed");
-        } else {
-            Scanner scanner = new Scanner(System.in);
-            int n = scanner.nextInt();
-            int c = fastFibonacciLastDigit(n);
-            System.out.println(c);
-            scanner.close();
         }
     }
 }

@@ -78,6 +78,17 @@ public class FibonacciPartialSum {
     }
 
     public static void main(String[] args) {
+        quick_test();
+        Scanner scanner = new Scanner(System.in);
+        long from = scanner.nextLong();
+        long to = scanner.nextLong();
+        System.out.println(getFibonacciPartialSum(from, to));
+    }
+
+    /**
+     * 
+     */
+    private static void quick_test() {
         if (FULL_TEST) {
             boolean testPassed = true;
             for (long to = 1; to < FULL_TEST_MAX; ++to) {
@@ -95,11 +106,6 @@ public class FibonacciPartialSum {
 
             if (testPassed)
                 System.out.println("Ok, test passed");
-        } else {
-            Scanner scanner = new Scanner(System.in);
-            long from = scanner.nextLong();
-            long to = scanner.nextLong();
-            System.out.println(getFibonacciPartialSum(from, to));
         }
     }
 }

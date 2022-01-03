@@ -26,6 +26,18 @@ public class GCD {
     }
 
     public static void main(String args[]) {
+        quick_test();
+        Scanner scanner = new Scanner(System.in);
+        int a = scanner.nextInt();
+        int b = scanner.nextInt();
+
+        System.out.println(gcd(a, b));
+    }
+
+    /**
+     * 
+     */
+    private static void quick_test() {
         if (FULL_TEST) {
             int MAX_TEST_VAL = 20;
             for (int i = 1; i <= MAX_TEST_VAL; ++i) {
@@ -33,12 +45,6 @@ public class GCD {
                     System.out.println(
                             String.format("(%d,%d) gcd == %d, gcd_naive == %d", i, j, gcd(i, j), gcd_naive(i, j)));
             }
-        } else {
-            Scanner scanner = new Scanner(System.in);
-            int a = scanner.nextInt();
-            int b = scanner.nextInt();
-
-            System.out.println(gcd(a, b));
         }
     }
 }

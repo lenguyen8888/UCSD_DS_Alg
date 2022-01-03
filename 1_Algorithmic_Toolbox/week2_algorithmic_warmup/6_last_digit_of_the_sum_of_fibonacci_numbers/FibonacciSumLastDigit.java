@@ -63,14 +63,24 @@ public class FibonacciSumLastDigit {
     private static long getFibonacciSum(long n) {
 
         long result = fastFibonacciLastDig(n + 2);
-        // -1 in Modulo arithmetic is the same as
-        // adding MOD - 1
-        result += (DECIMAL_MOD - 1);
-        result %= DECIMAL_MOD;
+        result = (result - 1) % DECIMAL_MOD;
+        if (result < 0)
+            result += DECIMAL_MOD;
         return result;
     }
 
     public static void main(String[] args) {
+        quick_test();
+        Scanner scanner = new Scanner(System.in);
+        long n = scanner.nextLong();
+        long s = getFibonacciSum(n);
+        System.out.println(s);
+    }
+
+    /**
+     * 
+     */
+    private static void quick_test() {
         if (FULL_TEST) {
             boolean testPassed = true;
             for (long n = 0; n < FULL_TEST_MAX; ++n) {
@@ -85,12 +95,6 @@ public class FibonacciSumLastDigit {
 
             if (testPassed)
                 System.out.println("Ok, test passed");
-
-        } else {
-            Scanner scanner = new Scanner(System.in);
-            long n = scanner.nextLong();
-            long s = getFibonacciSum(n);
-            System.out.println(s);
         }
     }
 }

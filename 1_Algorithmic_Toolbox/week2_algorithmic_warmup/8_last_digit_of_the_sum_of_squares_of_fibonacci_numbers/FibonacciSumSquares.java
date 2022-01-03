@@ -69,6 +69,17 @@ public class FibonacciSumSquares {
     }
 
     public static void main(String[] args) {
+        quick_test();
+        Scanner scanner = new Scanner(System.in);
+        long n = scanner.nextLong();
+        long s = getFibonacciSumSquares(n);
+        System.out.println(s);
+    }
+
+    /**
+     * 
+     */
+    private static void quick_test() {
         if (FULL_TEST) {
             boolean testPassed = true;
             for (long n = 0; n < FULL_TEST_MAX; ++n) {
@@ -82,11 +93,6 @@ public class FibonacciSumSquares {
 
             if (testPassed)
                 System.out.println("Ok, test passed");
-        } else {
-            Scanner scanner = new Scanner(System.in);
-            long n = scanner.nextLong();
-            long s = getFibonacciSumSquares(n);
-            System.out.println(s);
         }
     }
 }

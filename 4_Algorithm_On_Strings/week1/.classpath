@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="non_shared_substring"/>
+	<classpathentry kind="src" path="suffix_tree"/>
+	<classpathentry kind="src" path="trie"/>
+	<classpathentry kind="src" path="trie_matching"/>
+	<classpathentry kind="src" path="trie_matching_extended"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
