@@ -53,6 +53,20 @@ public class LargestNumber {
     }
 
     public static void main(String[] args) {
+        quick_test();
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        String[] a = new String[n];
+        for (int i = 0; i < n; i++) {
+            a[i] = scanner.next();
+        }
+        System.out.println(largestNumber(a));
+    }
+
+    /**
+     * 
+     */
+    private static void quick_test() {
         if (FULL_TEST) {
             boolean testPassed = true;
             for (int i = 0; i < MAX_TEST_INT; i++) {
@@ -68,14 +82,6 @@ public class LargestNumber {
             }
             if (testPassed)
                 System.out.println("test passed");
-        } else {
-            Scanner scanner = new Scanner(System.in);
-            int n = scanner.nextInt();
-            String[] a = new String[n];
-            for (int i = 0; i < n; i++) {
-                a[i] = scanner.next();
-            }
-            System.out.println(largestNumber(a));
         }
     }
 }
