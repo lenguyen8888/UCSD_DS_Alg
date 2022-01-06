@@ -1,6 +1,8 @@
-import java.util.*;
-import java.io.*;
-import java.util.zip.CheckedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class SuffixArray {
     class FastScanner {
@@ -43,10 +45,28 @@ public class SuffixArray {
     // such that the value result[i] is the index (0-based)
     // in text where the i-th lexicographically smallest
     // suffix of text starts.
-    public int[] computeSuffixArray(String text) {
-        // write your code here
+//    public int[] computeSuffixArray(String text) {
+//        // write your code here
+//    }
+//    public int[] computeSuffixArray(String text) {
+//        return new int[0];
+//    }
+
+    String rotateLeft(String s) {
+        return s.charAt(s.length() - 1) + s.substring(0, s.length() - 1);
     }
 
+    public int[] computeSuffixArray(String text) {
+        int[] sArray = new int[text.length()];
+        Suffix[] suffixes = new Suffix[text.length()];
+        for (int i = 0; i < text.length(); ++i) {
+            suffixes[i] = new Suffix(text.substring(i), i);
+        }
+        Arrays.sort(suffixes);
+        for (int i = 0; i < text.length(); ++i)
+            sArray[i] = suffixes[i].start;
+        return sArray;
+    }
 
     static public void main(String[] args) throws IOException {
         new SuffixArray().run();

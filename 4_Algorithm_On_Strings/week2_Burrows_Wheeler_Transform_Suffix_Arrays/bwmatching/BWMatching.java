@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 public class BWMatching {
     class FastScanner {
@@ -23,23 +25,117 @@ public class BWMatching {
         }
     }
 
+    private final static String ALL_CHAR = "$ACGT";
+    private final static int LETTER_RANGE = ALL_CHAR.length();
+
+    private int letterToIndex(char letter) {
+        switch (letter) {
+        case '$':
+            return 0;
+        case 'A':
+            return 1;
+        case 'C':
+            return 2;
+        case 'G':
+            return 3;
+        case 'T':
+            return 4;
+        default: // '$'
+//            assert (false);
+            return 0;
+        }
+    }
+
     // Preprocess the Burrows-Wheeler Transform bwt of some text
     // and compute as a result:
-    //   * starts - for each character C in bwt, starts[C] is the first position
-    //       of this character in the sorted array of
-    //       all characters of the text.
-    //   * occ_count_before - for each character C in bwt and each position P in bwt,
-    //       occ_count_before[C][P] is the number of occurrences of character C in bwt
-    //       from position 0 to position P inclusive.
+    // * starts - for each character C in bwt, starts[C] is the first position
+    // of this character in the sorted array of
+    // all characters of the text.
+    // * occ_count_before - for each character C in bwt and each position P in bwt,
+    // occ_count_before[C][P] is the number of occurrences of character C in bwt
+    // from position 0 to position P inclusive.
+//    private void PreprocessBWT(String bwt, Map<Character, Integer> starts, Map<Character, int[]> occ_counts_before) {
+//        // Implement this function yourself
+//    }
     private void PreprocessBWT(String bwt, Map<Character, Integer> starts, Map<Character, int[]> occ_counts_before) {
-        // Implement this function yourself
+        calcStarts(bwt, starts);
+        calcOccCount(bwt, occ_counts_before);
+    }
+
+    /**
+     * @param bwt
+     * @param occ_counts_before
+     */
+    private void calcOccCount(String bwt, Map<Character, int[]> occ_counts_before) {
+        occ_counts_before.clear();
+        for (int i = 0; i < ALL_CHAR.length(); ++i) {
+            char c = ALL_CHAR.charAt(i);
+            occ_counts_before.put(c, new int[bwt.length() + 1]);
+        }
+
+        for (int i = 0; i < bwt.length(); ++i) {
+            char c = bwt.charAt(i);
+            for (int j = 0; j < ALL_CHAR.length(); ++j) {
+                char occCh = ALL_CHAR.charAt(j);
+                int[] countA = occ_counts_before.get(occCh);
+                if (occCh == c)
+                    countA[i + 1] = countA[i] + 1;
+                else
+                    countA[i + 1] = countA[i];
+            }
+        }
+    }
+
+    /**
+     * @param bwt
+     * @param starts
+     */
+    private void calcStarts(String bwt, Map<Character, Integer> starts) {
+        // Initialize starts count, occ_counts_before
+        Map<Character, Integer> count = new HashMap<>();
+        for (int i = 0; i < ALL_CHAR.length(); ++i) {
+            char c = ALL_CHAR.charAt(i);
+            count.put(c, 0);
+        }
+        // count characters
+        for (int i = 0; i < bwt.length(); ++i) {
+            char c = bwt.charAt(i);
+            count.put(c, count.get(c) + 1);
+        }
+        // accumulate to the correct start index
+        starts.clear();
+        starts.put(ALL_CHAR.charAt(0), 0);
+        for (int i = 1; i < ALL_CHAR.length(); ++i) {
+            char c = ALL_CHAR.charAt(i);
+            char prevCh = ALL_CHAR.charAt(i - 1);
+            starts.put(c, starts.get(prevCh) + count.get(prevCh));
+        }
     }
 
     // Compute the number of occurrences of string pattern in the text
     // given only Burrows-Wheeler Transform bwt of the text and additional
-    // information we get from the preprocessing stage - starts and occ_counts_before.
-    int CountOccurrences(String pattern, String bwt, Map<Character, Integer> starts, Map<Character, int[]> occ_counts_before) {
-        // Implement this function yourself
+    // information we get from the preprocessing stage - starts and
+    // occ_counts_before.
+//    int CountOccurrences(String pattern, String bwt, Map<Character, Integer> starts, Map<Character, int[]> occ_counts_before) {
+//        // Implement this function yourself
+//    }
+//    int CountOccurrences(String pattern, String bwt, Map<Character, Integer> starts,
+//            Map<Character, int[]> occ_counts_before) {
+//        return 0;
+//    }
+    int CountOccurrences(String pattern, String bwt, Map<Character, Integer> starts,
+            Map<Character, int[]> occ_counts_before) {
+        int top = 0, bottom = bwt.length() - 1;
+        for (int i = pattern.length() - 1; i >= 0; --i) {
+            if (top <= bottom) {
+                char p = pattern.charAt(i);
+                top = starts.get(p) + occ_counts_before.get(p)[top];
+                bottom = starts.get(p) + occ_counts_before.get(p)[bottom + 1] - 1;
+            } else {
+                return bottom - top + 1;
+            }
+        }
+        return 0;
     }
 
     static public void main(String[] args) throws IOException {
