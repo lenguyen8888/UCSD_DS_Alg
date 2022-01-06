@@ -52,10 +52,6 @@ public class SuffixArray {
 //        return new int[0];
 //    }
 
-    String rotateLeft(String s) {
-        return s.charAt(s.length() - 1) + s.substring(0, s.length() - 1);
-    }
-
     public int[] computeSuffixArray(String text) {
         int[] sArray = new int[text.length()];
         Suffix[] suffixes = new Suffix[text.length()];
