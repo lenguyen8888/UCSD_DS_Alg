@@ -28,6 +28,8 @@ public class SuffixTree {
         }
     }
 
+    private Node root;
+
     private class Node {
         public static final int NUM_LETTERS = 5;
         public static final int NA = -1;
@@ -72,35 +74,6 @@ public class SuffixTree {
             assert (false);
             return Node.NA;
         }
-    }
-
-    private Node root;
-
-    // Build a suffix tree of the string text and return a list
-    // with all of the labels of its edges (the corresponding
-    // substrings of the text) in any order.
-//    public List<String> computeSuffixTreeEdges(String text) {
-//        List<String> result = new ArrayList<String>();
-//        // Implement this function yourself
-//        return result;
-//    }
-    public List<String> computeSuffixTreeEdges(String text) {
-        List<String> result = new ArrayList<String>();
-        buildSuffixTree(text);
-        ArrayDeque<Node> queue = new ArrayDeque<>();
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            Node n = queue.pop();
-            if (n != root) {
-                result.add(n.lab);
-            }
-            for (Node node : n.next) {
-                if (node != null) {
-                    queue.add(node);
-                }
-            }
-        }
-        return result;
     }
 
     private int prefixMatchCnt(String a, String b, int start) {
@@ -160,6 +133,33 @@ public class SuffixTree {
                 }
             }
         }
+    }
+
+    // Build a suffix tree of the string text and return a list
+    // with all of the labels of its edges (the corresponding
+    // substrings of the text) in any order.
+//    public List<String> computeSuffixTreeEdges(String text) {
+//        List<String> result = new ArrayList<String>();
+//        // Implement this function yourself
+//        return result;
+//    }
+    public List<String> computeSuffixTreeEdges(String text) {
+        List<String> result = new ArrayList<String>();
+        buildSuffixTree(text);
+        ArrayDeque<Node> queue = new ArrayDeque<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            Node n = queue.pop();
+            if (n != root) {
+                result.add(n.lab);
+            }
+            for (Node node : n.next) {
+                if (node != null) {
+                    queue.add(node);
+                }
+            }
+        }
+        return result;
     }
 
     static public void main(String[] args) throws IOException {
