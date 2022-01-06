@@ -4,19 +4,18 @@ public class Change {
     private static final int COIN_BASE[] = { 10, 5, 1 };
 
     private static int getChange(int m) {
-        int numCoins = 0;
+        int coinCnt = 0;
         while (m > 0) {
             for (int i = 0; i < COIN_BASE.length; ++i) {
                 int coinVal = COIN_BASE[i];
                 if (m >= coinVal) {
-                    int changeVal = (m / coinVal) * coinVal;
-                    numCoins += changeVal / coinVal;
-                    m -= changeVal;
+                    int maxChangeForCoin = (m / coinVal) * coinVal;
+                    coinCnt += maxChangeForCoin / coinVal;
+                    m -= maxChangeForCoin;
                 }
             }
         }
-        // write your code here
-        return numCoins;
+        return coinCnt;
     }
 
     public static void main(String[] args) {

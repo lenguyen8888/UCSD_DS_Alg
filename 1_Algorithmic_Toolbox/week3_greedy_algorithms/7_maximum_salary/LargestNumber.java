@@ -33,23 +33,20 @@ public class LargestNumber {
         String result = "";
         int numStr = a.length;
         int aLength = a.length;
-        String[] aTemp = new String[aLength];
-        for (int i = 0; i < aLength; i++)
-            aTemp[i] = new String(a[i]);
         while (numStr > 0) {
             String maxStr = "";
             int iMax = 0;
             for (int i = 0; i < aLength; i++) {
-                if (aTemp[i].length() > 0) {
-                    if (maxStr.length() == 0 || strJavaGE(aTemp[i], maxStr)) {
-                        maxStr = aTemp[i];
+                if (a[i].length() > 0) {
+                    if (maxStr.length() == 0 || strJavaGE(a[i], maxStr)) {
+                        maxStr = a[i];
                         iMax = i;
                     }
                 }
             }
             if (maxStr.length() > 0)
                 result += maxStr;
-            aTemp[iMax] = ""; // Remove maxStr
+            a[iMax] = ""; // Remove maxStr
             numStr--;
         }
         return result;

@@ -7,19 +7,15 @@ public class CoveringSegments {
     private static int[] optimalPoints(Segment[] segments) {
         // write your code here
 
-        Segment[] tempS = new Segment[segments.length];
-        for (int i = 0; i < segments.length; i++)
-            tempS[i] = new Segment(segments[i]);
-
         // Greedy algorithm is to wait for the segment.end to visit
         // from text book
-        Arrays.sort(tempS);
+        Arrays.sort(segments, (Segment a, Segment b) -> Integer.signum(a.end - b.end));
         LinkedList<Integer> pointL = new LinkedList<Integer>();
 
         int prevEnd = Integer.MIN_VALUE;
-        for (int i = 0; i < tempS.length; i++) {
-            if (tempS[i].start > prevEnd) {
-                prevEnd = tempS[i].end;
+        for (int i = 0; i < segments.length; i++) {
+            if (segments[i].start > prevEnd) {
+                prevEnd = segments[i].end;
                 pointL.add(prevEnd);
             }
         }
@@ -32,7 +28,7 @@ public class CoveringSegments {
         return points;
     }
 
-    private static class Segment implements Comparable<Segment> {
+    private static class Segment {
         int start, end;
 
         Segment(int start, int end) {
@@ -40,16 +36,6 @@ public class CoveringSegments {
             this.end = end;
         }
 
-        Segment(Segment o) {
-            this.start = o.start;
-            this.end = o.end;
-        }
-
-        @Override
-        public int compareTo(CoveringSegments.Segment o) {
-            // TODO Auto-generated method stub
-            return Integer.compare(this.end, o.end);
-        }
     }
 
     public static void main(String[] args) {
