@@ -25,9 +25,24 @@ public class SuffixArrayMatching {
         }
     }
 
+//    public int[] computeSuffixArray(String text) {
+//        int[] suffixArray;
+//
+//        // write your code here
+//
+//        return suffixArray;
+//    }
+//
+//    public List<Integer> findOccurrences(String pattern, String text, int[] suffixArray) {
+//        List<Integer> result;
+//
+//        // write your code here
+//
+//        return result;
+//    }
 
     public int[] computeSuffixArray(String text) {
-        int[] suffixArray;
+        int[] suffixArray = new int[0];
 
         // write your code here
 
@@ -35,7 +50,7 @@ public class SuffixArrayMatching {
     }
 
     public List<Integer> findOccurrences(String pattern, String text, int[] suffixArray) {
-        List<Integer> result;
+        List<Integer> result = new ArrayList<>();
 
         // write your code here
 
@@ -43,7 +58,7 @@ public class SuffixArrayMatching {
     }
 
     static public void main(String[] args) throws IOException {
-        new SuffixArrayMatching_ml().run();
+        new SuffixArrayMatching().run();
     }
 
     public void print(boolean[] x) {
