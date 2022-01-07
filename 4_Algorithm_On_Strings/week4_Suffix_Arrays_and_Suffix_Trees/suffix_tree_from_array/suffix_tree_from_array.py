@@ -1,7 +1,64 @@
 # python3
 import sys
+# from _tracemalloc import start
+# from curses import start_color
 
+ALPHABET = "$ACGT"
+class SuffixTree:
+    class Node:
+        def __init__(self, node, depth, start, end):
+            self.parent = node
+            self.children = {}
+            self.depth = depth
+            self.start = start
+            self.end = end
+    def __init__(self, text, order, lcp):
+        self.text = text
+        self.order = order
+        self.lcp = lcp
+        self.root = self.Node(None, 0, -1, -1)
+        self.ele = ['$', 'A', 'C', 'G', 'T']
+                
+    def STFromSA(self):
+        lcpPrev = 0
+        curNode = self.root
+        for i in range(len(self.text)):
+            suffix = self.order[i]
+            while curNode.depth > lcpPrev:
+                curNode = curNode.parent
+            if curNode.depth == lcpPrev:
+                curNode = self.CreateNewLeaf(curNode, suffix)
+            else:
+                edgeStart = self.order[i-1] + curNode.depth
+                offset = lcpPrev - curNode.depth
+                midNode = self.BreakEdge(curNode, edgeStart, offset)
+                curNode = self.CreateNewLeaf(midNode, suffix)
+            if i < len(self.text) - 1:
+                lcpPrev = self.lcp[i]        
+        return self.root  
 
+    def CreateNewLeaf(self, node, suffix):
+        textLen = len(self.text)
+        leaf = self.Node(node
+                , textLen - suffix
+                , suffix + node.depth
+                , textLen) #, len(s)-1)
+        node.children[self.text[leaf.start]] = leaf
+        return leaf
+
+    def BreakEdge(self, node, start, offset):
+        startChar = self.text[start]
+        midChar = self.text[start + offset]
+        midNode = self.Node(node
+                    ,node.depth + offset
+                    ,start
+                    ,start + offset) #,start + offset - 1)
+        midNode.children[midChar] = node.children[startChar]
+        node.children[startChar].parent = midNode
+        node.children[startChar].start += offset
+        node.children[startChar] = midNode
+        return midNode
+                  
 def suffix_array_to_suffix_tree(sa, lcp, text):
     """
     Build suffix tree of the string text given its suffix array suffix_array
@@ -19,9 +76,17 @@ def suffix_array_to_suffix_tree(sa, lcp, text):
     (corresponding to the root node), and it should be the first edge in the list (because
     it has the smallest first character of all edges outgoing from the root).
     """
-    tree = {}
-    # Implement this function yourself
-    return tree
+    tree = SuffixTree(text, sa, lcp)
+    root = tree.STFromSA()
+    return root
+
+def printEdges(cur):
+    if cur.parent is not None:
+        print(cur.start, cur.end)
+    for c in ALPHABET:
+        child = cur.children.get(c, None)
+        if child is not None:
+            printEdges(child)
 
 
 if __name__ == '__main__':
@@ -53,15 +118,16 @@ if __name__ == '__main__':
             OutputEdges(tree, edge[0]);
     
     """
-    stack = [(0, 0)]
-    result_edges = []
-    while len(stack) > 0:
-      (node, edge_index) = stack[-1]
-      stack.pop()
-      if not node in tree:
-        continue
-      edges = tree[node]
-      if edge_index + 1 < len(edges):
-        stack.append((node, edge_index + 1))
-      print("%d %d" % (edges[edge_index][1], edges[edge_index][2]))
-      stack.append((edges[edge_index][0], 0))
+    # stack = [(0, 0)]
+    # result_edges = []
+    # while len(stack) > 0:
+    #   (node, edge_index) = stack[-1]
+    #   stack.pop()
+    #   if not node in tree:
+    #     continue
+    #   edges = tree[node]
+    #   if edge_index + 1 < len(edges):
+    #     stack.append((node, edge_index + 1))
+    #   print("%d %d" % (edges[edge_index][1], edges[edge_index][2]))
+    #   stack.append((edges[edge_index][0], 0))
+    printEdges(tree)
