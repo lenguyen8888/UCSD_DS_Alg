@@ -150,15 +150,16 @@ public class SuffixTreeFromArray {
 
         private static final boolean DEBUG = false;
 
-        private void dfsEdge(Node node) {
-            if (node.parent != null) {
-                System.out.println(node.start + " " + node.end);
-            }
-            for (char c : ALPHABET) {
-                if (node.children.containsKey(c)) {
-                    Node child = node.children.get(c);
-                    dfsEdge(child);
-                }
+    }
+
+    private void dfsEdge(SuffixTree.Node node) {
+        if (node.parent != null) {
+            System.out.println(node.start + " " + node.end);
+        }
+        for (char c : ALPHABET) {
+            if (node.children.containsKey(c)) {
+                SuffixTree.Node child = node.children.get(c);
+                dfsEdge(child);
             }
         }
     }
@@ -166,10 +167,10 @@ public class SuffixTreeFromArray {
     // Change the contract to collect just edge list.
     // The template code data structure is too confusing!
     ArrayList<String> SuffixTreeFromSuffixArray(int[] suffixArray, int[] lcpArray, final String text) {
-//        ArrayList<String> edgeList = new ArrayList<>();
+        ArrayList<String> edgeList = new ArrayList<>();
         SuffixTree tree = new SuffixTree(text, suffixArray, lcpArray);
         SuffixTree.Node root = tree.stFromSA();
-        tree.dfsEdge(root, edgeList);
+        dfsEdge(root);
         return edgeList;
     }
 
@@ -195,6 +196,9 @@ public class SuffixTreeFromArray {
             lcpArray[i] = scanner.nextInt();
         }
         System.out.println(text);
+        SuffixTree tree = new SuffixTree(text, suffixArray, lcpArray);
+        SuffixTree.Node root = tree.stFromSA();
+        dfsEdge(root);
         // Build the suffix tree and get a mapping from
         // suffix tree node ID to the list of outgoing Edges.
 //        Map<Integer, List<Edge>> suffixTree = SuffixTreeFromSuffixArray(suffixArray, lcpArray, text);
@@ -242,7 +246,7 @@ public class SuffixTreeFromArray {
 //            edgeIndexStack[stackSize] = 0;
 //            stackSize += 1;
 //        }
-        ArrayList<String> result = SuffixTreeFromSuffixArray(suffixArray, lcpArray, text);
-        print(result);
+//        ArrayList<String> result = SuffixTreeFromSuffixArray(suffixArray, lcpArray, text);
+//        print(result);
     }
 }

@@ -4,7 +4,7 @@ import sys
 def find_occurrences(text, patterns):
     occs = set()
 
-    // write your code here
+    # // write your code here
 
     return occs
 
