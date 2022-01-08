@@ -29,21 +29,9 @@ public class BWMatching {
     private final static int LETTER_RANGE = ALL_CHAR.length();
 
     private int letterToIndex(char letter) {
-        switch (letter) {
-        case '$':
-            return 0;
-        case 'A':
-            return 1;
-        case 'C':
-            return 2;
-        case 'G':
-            return 3;
-        case 'T':
-            return 4;
-        default: // '$'
-//            assert (false);
-            return 0;
-        }
+        int retVal = ALL_CHAR.indexOf(letter);
+        assert (retVal >= 0);
+        return retVal;
     }
 
     // Preprocess the Burrows-Wheeler Transform bwt of some text
@@ -68,8 +56,7 @@ public class BWMatching {
      */
     private void calcOccCount(String bwt, Map<Character, int[]> occ_counts_before) {
         occ_counts_before.clear();
-        for (int i = 0; i < ALL_CHAR.length(); ++i) {
-            char c = ALL_CHAR.charAt(i);
+        for (char c : ALL_CHAR.toCharArray()) {
             occ_counts_before.put(c, new int[bwt.length() + 1]);
         }
 
@@ -93,8 +80,7 @@ public class BWMatching {
     private void calcStarts(String bwt, Map<Character, Integer> starts) {
         // Initialize starts count, occ_counts_before
         Map<Character, Integer> count = new HashMap<>();
-        for (int i = 0; i < ALL_CHAR.length(); ++i) {
-            char c = ALL_CHAR.charAt(i);
+        for (char c : ALL_CHAR.toCharArray()) {
             count.put(c, 0);
         }
         // count characters
@@ -123,14 +109,16 @@ public class BWMatching {
 //            Map<Character, int[]> occ_counts_before) {
 //        return 0;
 //    }
+
     int CountOccurrences(String pattern, String bwt, Map<Character, Integer> starts,
             Map<Character, int[]> occ_counts_before) {
         int top = 0, bottom = bwt.length() - 1;
-        for (int i = pattern.length() - 1; i >= 0; --i) {
-            if (top <= bottom) {
-                char p = pattern.charAt(i);
-                top = starts.get(p) + occ_counts_before.get(p)[top];
-                bottom = starts.get(p) + occ_counts_before.get(p)[bottom + 1] - 1;
+        int i = pattern.length() - 1;
+        while (top <= bottom) {
+            if (i >= 0) {
+                char symbol = pattern.charAt(i--);
+                top = starts.get(symbol) + occ_counts_before.get(symbol)[top];
+                bottom = starts.get(symbol) + occ_counts_before.get(symbol)[bottom + 1] - 1;
             } else {
                 return bottom - top + 1;
             }
