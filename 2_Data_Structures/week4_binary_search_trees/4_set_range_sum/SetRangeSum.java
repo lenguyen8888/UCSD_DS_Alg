@@ -1,5 +1,8 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
 
 public class SetRangeSum {
 
@@ -30,7 +33,8 @@ public class SetRangeSum {
     }
 
     void update(Vertex v) {
-        if (v == null) return;
+        if (v == null)
+            return;
         v.sum = v.key + (v.left != null ? v.left.sum : 0) + (v.right != null ? v.right.sum : 0);
         if (v.left != null) {
             v.left.parent = v;
@@ -85,7 +89,8 @@ public class SetRangeSum {
 
     // Makes splay of the given vertex and returns the new root.
     Vertex splay(Vertex v) {
-        if (v == null) return null;
+        if (v == null)
+            return null;
         while (v.parent != null) {
             if (v.parent.parent == null) {
                 smallRotation(v);
@@ -99,8 +104,10 @@ public class SetRangeSum {
     class VertexPair {
         Vertex left;
         Vertex right;
+
         VertexPair() {
         }
+
         VertexPair(Vertex left, Vertex right) {
             this.left = left;
             this.right = right;
@@ -158,8 +165,10 @@ public class SetRangeSum {
     }
 
     Vertex merge(Vertex left, Vertex right) {
-        if (left == null) return right;
-        if (right == null) return left;
+        if (left == null)
+            return right;
+        if (right == null)
+            return left;
         while (right.left != null) {
             right = right.left;
         }
@@ -186,15 +195,47 @@ public class SetRangeSum {
         root = merge(merge(left, new_vertex), right);
     }
 
-    void erase(int x) {
-        // Implement erase yourself
+//    void erase(int x) {
+//        // Implement erase yourself
+//    }
+//
+//    boolean find(int x) {
+//        // Implement find yourself
+//        return false;
+//    }
+//
+//    long sum(int from, int to) {
+//        VertexPair leftMiddle = split(root, from);
+//        Vertex left = leftMiddle.left;
+//        Vertex middle = leftMiddle.right;
+//        VertexPair middleRight = split(middle, to + 1);
+//        middle = middleRight.left;
+//        Vertex right = middleRight.right;
+//        long ans = 0;
+//        // Complete the implementation of sum
+//
+//        return ans;
+//    }
 
+    void erase(int x) {
+        VertexPair leftMiddle = split(root, x);
+        Vertex left = leftMiddle.left;
+        Vertex middle = leftMiddle.right;
+        VertexPair middleRight = split(middle, x + 1);
+        middle = middleRight.left;
+        Vertex right = middleRight.right;
+
+        root = merge(left, right);
     }
 
     boolean find(int x) {
-        // Implement find yourself
-
-        return false;
+        VertexPair pair = find(root, x);
+        Vertex result = pair.left;
+        root = pair.right;
+        if (result == null || result.key != x)
+            return false;
+        else
+            return true;
     }
 
     long sum(int from, int to) {
@@ -204,12 +245,15 @@ public class SetRangeSum {
         VertexPair middleRight = split(middle, to + 1);
         middle = middleRight.left;
         Vertex right = middleRight.right;
+
         long ans = 0;
-        // Complete the implementation of sum
+        if (middle != null)
+            ans += middle.sum;
+
+        root = merge(merge(left, middle), right);
 
         return ans;
     }
-
 
     public static final int MODULO = 1000000001;
 
@@ -219,25 +263,28 @@ public class SetRangeSum {
         for (int i = 0; i < n; i++) {
             char type = nextChar();
             switch (type) {
-                case '+' : {
-                    int x = nextInt();
-                    insert((x + last_sum_result) % MODULO);
-                } break;
-                case '-' : {
-                    int x = nextInt();
-                    erase((x + last_sum_result) % MODULO);
-                } break;
-                case '?' : {
-                    int x = nextInt();
-                    out.println(find((x + last_sum_result) % MODULO) ? "Found" : "Not found");
-                } break;
-                case 's' : {
-                    int l = nextInt();
-                    int r = nextInt();
-                    long res = sum((l + last_sum_result) % MODULO, (r + last_sum_result) % MODULO);
-                    out.println(res);
-                    last_sum_result = (int)(res % MODULO);
-                }
+            case '+': {
+                int x = nextInt();
+                insert((x + last_sum_result) % MODULO);
+            }
+                break;
+            case '-': {
+                int x = nextInt();
+                erase((x + last_sum_result) % MODULO);
+            }
+                break;
+            case '?': {
+                int x = nextInt();
+                out.println(find((x + last_sum_result) % MODULO) ? "Found" : "Not found");
+            }
+                break;
+            case 's': {
+                int l = nextInt();
+                int r = nextInt();
+                long res = sum((l + last_sum_result) % MODULO, (r + last_sum_result) % MODULO);
+                out.println(res);
+                last_sum_result = (int) (res % MODULO);
+            }
             }
         }
     }
@@ -268,6 +315,7 @@ public class SetRangeSum {
     int nextInt() throws IOException {
         return Integer.parseInt(nextToken());
     }
+
     char nextChar() throws IOException {
         return nextToken().charAt(0);
     }

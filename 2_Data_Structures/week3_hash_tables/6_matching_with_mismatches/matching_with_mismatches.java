@@ -13,6 +13,10 @@ public class matching_with_mismatches {
 //        return pos;
 //    }
 
+    private static final long PRIME = Math.round(1e9) + 7;
+    private static final long X = 263;
+    private long[] h1Table, h2Table;
+
     private long fastExp(long base, long exp, long modulo) {
         if (exp == 0)
             return 1;
@@ -31,10 +35,6 @@ public class matching_with_mismatches {
         else
             return ((base % modulo) * t) % modulo;
     }
-
-    private static final long PRIME = Math.round(1e9) + 7;
-    private static final long X = 263;
-    private long[] h1Table, h2Table;
 
     private long[] hashTable(String s, long prime, long x) {
         int sLen = s.length();
