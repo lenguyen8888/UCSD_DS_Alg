@@ -33,10 +33,10 @@ public class MaxSlidingWindow {
             while (!dq.isEmpty() && A.get(i) >= A.get(dq.peekLast()))
                 dq.removeLast();
             dq.addLast(i);
-            if ((i >= w) && !dq.isEmpty() && dq.peek() == (i - w))
-                dq.remove();
+            if ((i >= w) && !dq.isEmpty() && dq.peekFirst() == (i - w))
+                dq.removeFirst();
             if (i >= w - 1)
-                System.out.print(A.get(dq.peek()) + " ");
+                System.out.print(A.get(dq.peekFirst()) + " ");
         }
     }
 
