@@ -1,8 +1,13 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.Arrays;
 
 public class Evacuation {
     private static FastScanner in;
@@ -14,10 +19,14 @@ public class Evacuation {
         System.out.println(maxFlow(graph, 0, graph.size() - 1));
     }
 
+//    private static int maxFlow(FlowGraph graph, int from, int to) {
+//        int flow = 0;
+//        /* your code goes here */
+//        return flow;
+//    }
+
     private static int maxFlow(FlowGraph graph, int from, int to) {
-        int flow = 0;
-        /* your code goes here */
-        return flow;
+        return graph.maxFlow(from, to);
     }
 
     static FlowGraph readGraph() throws IOException {
@@ -32,37 +41,47 @@ public class Evacuation {
         return graph;
     }
 
-    static class Edge {
-        int from, to, capacity, flow;
+    // FlowGraph implementation
 
-        public Edge(int from, int to, int capacity) {
-            this.from = from;
-            this.to = to;
-            this.capacity = capacity;
-            this.flow = 0;
-        }
-    }
-
-    /* This class implements a bit unusual scheme to store the graph edges, in order
-     * to retrieve the backward edge for a given edge quickly. */
+    /*
+     * This class implements a bit unusual scheme to store the graph edges, in order
+     * to retrieve the backward edge for a given edge quickly.
+     */
     static class FlowGraph {
+        private static class Edge {
+            int from, to, capacity, flow;
+
+            public Edge(int from, int to, int capacity) {
+                this.from = from;
+                this.to = to;
+                this.capacity = capacity;
+                this.flow = 0;
+            }
+        }
+
         /* List of all - forward and backward - edges */
         private List<Edge> edges;
 
         /* These adjacency lists store only indices of edges from the edges list */
         private List<Integer>[] graph;
 
+        private int[] prev;
+
+        private boolean[] visited;
+
         public FlowGraph(int n) {
-            this.graph = (ArrayList<Integer>[])new ArrayList[n];
+            this.graph = (ArrayList<Integer>[]) new ArrayList[n];
             for (int i = 0; i < n; ++i)
                 this.graph[i] = new ArrayList<>();
             this.edges = new ArrayList<>();
         }
 
         public void addEdge(int from, int to, int capacity) {
-            /* Note that we first append a forward edge and then a backward edge,
-             * so all forward edges are stored at even indices (starting from 0),
-             * whereas backward edges are stored at odd indices. */
+            /*
+             * Note that we first append a forward edge and then a backward edge, so all
+             * forward edges are stored at even indices (starting from 0), whereas backward
+             * edges are stored at odd indices.
+             */
             Edge forwardEdge = new Edge(from, to, capacity);
             Edge backwardEdge = new Edge(to, from, 0);
             graph[from].add(edges.size());
@@ -84,15 +103,127 @@ public class Evacuation {
         }
 
         public void addFlow(int id, int flow) {
-            /* To get a backward edge for a true forward edge (i.e id is even), we should get id + 1
-             * due to the described above scheme. On the other hand, when we have to get a "backward"
-             * edge for a backward edge (i.e. get a forward edge for backward - id is odd), id - 1
-             * should be taken.
+            /*
+             * To get a backward edge for a true forward edge (i.e id is even), we should
+             * get id + 1 due to the described above scheme. On the other hand, when we have
+             * to get a "backward" edge for a backward edge (i.e. get a forward edge for
+             * backward - id is odd), id - 1 should be taken.
              *
-             * It turns out that id ^ 1 works for both cases. Think this through! */
+             * It turns out that id ^ 1 works for both cases. Think this through!
+             */
             edges.get(id).flow += flow;
             edges.get(id ^ 1).flow -= flow;
         }
+
+        // private helper functions
+
+        int maxFlow(int from, int to) {
+            int flow = 0;
+            List<Integer> edgeList = new ArrayList<>();
+            while (true) {
+                // Implement Edmond-Karp BFS augmented class selection
+                bfsPath(from, to, edgeList);
+                if (edgeList.size() > 0) {
+                    int minFlow = findMinFlow(edgeList);
+                    flow += minFlow;
+                    for (int edgeId : edgeList) {
+                        addFlow(edgeId, minFlow);
+                    }
+                } else {
+                    break;
+                }
+            }
+            return flow;
+        }
+
+        /**
+         * Must handle parallel edges => we need to return edgeList
+         * 
+         * @param from
+         * @param to
+         * @param edgeList
+         */
+        private void bfsPath(int from, int to, List<Integer> edgeList) {
+            initBFS();
+
+            Deque<Integer> queue = new ArrayDeque<>();
+
+            // Save the edge we arrive at node v
+            Map<Integer, Integer> arriveEdgeMap = new HashMap<>();
+            // BFS traversal
+            queue.add(from);
+            int u, v;
+            while (!queue.isEmpty()) {
+                u = queue.remove();
+                visited[u] = true;
+                if (u == to)
+                    break;
+                for (int edgeId : getIds(u)) {
+                    Edge edge = edges.get(edgeId);
+                    v = edge.to;
+                    if (!visited[v] && hasFlow(edgeId)) {
+                        queue.add(v);
+                        prev[v] = u;
+                        arriveEdgeMap.put(v, edgeId);
+                    }
+                }
+            }
+
+            // Collect BFS path in stack to reverse
+            Deque<Integer> stack = new ArrayDeque<>();
+            if (visited[to]) {
+                v = to;
+                stack.push(v);
+                while (v != from) {
+                    v = prev[v];
+                    stack.push(v);
+                }
+            }
+            Integer[] path = new Integer[stack.size()];
+            path = stack.toArray(path);
+            edgeList.clear();
+            for (int i = 1; i < path.length; ++i)
+                edgeList.add(arriveEdgeMap.get(path[i]));
+        }
+
+        private int findMinFlow(List<Integer> edgeList) {
+            int minFlow = Integer.MAX_VALUE;
+            for (int edgeId : edgeList) {
+                if (minFlow > edgeMaxFlow(edgeId))
+                    minFlow = edgeMaxFlow(edgeId);
+            }
+            return minFlow;
+        }
+
+        private int edgeMaxFlow(int edgeId) {
+            return edges.get(edgeId).capacity - edges.get(edgeId).flow;
+        }
+
+        private boolean hasFlow(int edgeId) {
+            return edgeMaxFlow(edgeId) > 0;
+        }
+
+        /**
+         * 
+         */
+        private void initBFS() {
+            prev = new int[size()];
+            visited = new boolean[size()];
+            for (int i = 0; i < size(); ++i) {
+                prev[i] = -1;
+                visited[i] = false;
+            }
+        }
+
+        private int findConnectingEdge(int u, int v) {
+            for (int edgeId : getIds(u)) {
+                Edge edge = getEdge(edgeId);
+                if (edge.to == v)
+                    return edgeId;
+            }
+            return -1;
+        }
+
     }
 
     static class FastScanner {
