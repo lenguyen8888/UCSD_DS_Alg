@@ -215,15 +215,6 @@ public class Evacuation {
             }
         }
 
-        private int findConnectingEdge(int u, int v) {
-            for (int edgeId : getIds(u)) {
-                Edge edge = getEdge(edgeId);
-                if (edge.to == v)
-                    return edgeId;
-            }
-            return -1;
-        }
-
     }
 
     static class FastScanner {
