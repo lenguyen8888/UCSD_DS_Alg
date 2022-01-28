@@ -100,11 +100,11 @@ public class StockCharts {
         }
         // let's take numStock == 5, the bipartite node mapping
         // Stock(i) Stock(j)
-        // ........./- 1 --- 6 -\
-        // ......../-- 2 --- 7 --\
-        // src(0)->... 3 --- 8 --->snk(11)
-        // ........\-- 4 --- 9 --/
-        // .........\- 5 -- 10 -/
+        // ........./- 1 ??? 6 -\
+        // ......../-- 2 ??? 7 --\
+        // src(0)->... 3 ??? 8 --->snk(11)
+        // ........\-- 4 ??? 9 --/
+        // .........\- 5 ?? 10 -/
         // we need to get the left index and right index calculation right
 
         for (int i = 0; i < numStocks; ++i) {
