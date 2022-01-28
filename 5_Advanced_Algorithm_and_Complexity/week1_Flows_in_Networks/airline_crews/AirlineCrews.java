@@ -7,9 +7,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.StringTokenizer;
 
 //public class MaxMatching {
@@ -221,7 +219,8 @@ public class AirlineCrews {
             Deque<Integer> queue = new ArrayDeque<>();
 
             // Save the edge we arrive at node v
-            Map<Integer, Integer> arriveEdgeMap = new HashMap<>();
+            int[] arriveEdgeMap = new int[size()];
+            Arrays.fill(arriveEdgeMap, -1);
             // BFS traversal
             queue.add(from);
             int u, v;
@@ -236,7 +235,7 @@ public class AirlineCrews {
                     if (!visited[v] && hasFlow(edgeId)) {
                         queue.add(v);
                         prev[v] = u;
-                        arriveEdgeMap.put(v, edgeId);
+                        arriveEdgeMap[v] = edgeId;
                     }
                 }
             }
@@ -255,7 +254,7 @@ public class AirlineCrews {
             path = stack.toArray(path);
             edgeList.clear();
             for (int i = 1; i < path.length; ++i)
-                edgeList.add(arriveEdgeMap.get(path[i]));
+                edgeList.add(arriveEdgeMap[path[i]]);
         }
 
         private int findMinFlow(List<Integer> edgeList) {
