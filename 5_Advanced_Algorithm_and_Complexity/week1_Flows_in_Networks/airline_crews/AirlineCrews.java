@@ -213,7 +213,7 @@ public class AirlineCrews {
          * @param to
          * @param edgeList
          */
-        private void bfsPath(int from, int to, List<Integer> edgeList) {
+        void bfsPath(int from, int to, List<Integer> edgeList) {
             initBFS();
 
             Deque<Integer> queue = new ArrayDeque<>();
