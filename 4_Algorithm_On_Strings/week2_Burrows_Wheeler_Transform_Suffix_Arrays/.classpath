@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="bwmatching"/>
+	<classpathentry kind="src" path="bwt"/>
+	<classpathentry kind="src" path="bwtinverse"/>
+	<classpathentry kind="src" path="suffix_array"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

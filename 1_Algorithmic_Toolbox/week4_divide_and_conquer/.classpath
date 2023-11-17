@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="1_binary_search"/>
+	<classpathentry kind="src" path="2_binary_search_with_duplicates"/>
+	<classpathentry kind="src" path="3_majority_element"/>
+	<classpathentry kind="src" path="4_improving_quicksort"/>
+	<classpathentry kind="src" path="5_number_of_inversions"/>
+	<classpathentry kind="src" path="6_organizing_a_lottery"/>
+	<classpathentry kind="src" path="7_closest_points"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

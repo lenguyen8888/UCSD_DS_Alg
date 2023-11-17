@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="1_sum_of_two_digits"/>
+	<classpathentry kind="src" path="2_maximum_pairwise_product"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
