@@ -1,7 +1,12 @@
 # Uses python3
 import sys
 from collections import namedtuple
+from collections import namedtuple
 
+
+# Importing the namedtuple class from the collections module
+
+# Defining a named tuple called Segment with fields 'start' and 'end'
 Segment = namedtuple('Segment', 'start end')
 
 def optimal_points(segments):
@@ -22,21 +27,29 @@ def optimal_points(segments):
         >>> optimal_points([(1, 2), (2, 3), (3, 4), (4, 5)])
         [2, 3, 4]
     """
+
+    # Initialize an empty list to store the optimal points
     points = []
-    # sort segments by end point
+
+    # Sort the segments in ascending order based on the end point
     segments.sort(key=lambda x: x.end)
-    # initialize current point
+
+    # Initialize the current point with the end point of the first segment
     current = segments[0].end
-    # add current point to points
+
+    # Add the current point to the list of points
     points.append(current)
-    # iterate through segments
+
+    # Iterate through the segments
     for s in segments:
-        # if current point is not in segment
+        # If the current point is not within the segment
         if current < s.start or current > s.end:
-            # update current point
+            # Update the current point to the end point of the current segment
             current = s.end
-            # add current point to points
+            # Add the current point to the list of points
             points.append(current)
+
+    # Return the list of optimal points
     return points
 
 
