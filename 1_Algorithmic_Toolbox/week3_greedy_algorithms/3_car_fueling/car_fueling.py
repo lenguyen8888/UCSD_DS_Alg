@@ -3,7 +3,25 @@ import sys
 
 
 def compute_min_refills(distance, tank, stops):
-    # write your code here
+    """
+    Computes the minimum number of refills needed to travel a given distance with a given tank capacity and a list of stops.
+
+    Args:
+        distance (int): The total distance to be traveled.
+        tank (int): The capacity of the fuel tank.
+        stops (list): A list of distances from the starting point to each stop.
+
+    Returns:
+        int: The minimum number of refills needed. Returns -1 if it is not possible to reach the destination.
+
+    Example:
+        >>> compute_min_refills(950, 400, [200 375 550 750])
+        2
+        >>> compute_min_refills(10, 3,,[1 2 5 9])
+        -1
+        >>> compute_min_refills(200, 250,[100,150])
+        0
+    """
     num_refills = 0
     current_refill = 0
     n = len(stops)
