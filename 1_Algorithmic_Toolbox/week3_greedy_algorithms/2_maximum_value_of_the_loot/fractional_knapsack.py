@@ -1,6 +1,6 @@
 # Uses python3
 import sys
-DEBUG = True
+DEBUG = False
 
 def get_optimal_value(capacity, weights, values):
     """

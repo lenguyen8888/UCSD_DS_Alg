@@ -1,6 +1,7 @@
 #Uses python3
 
 import sys
+DEBUG = False
 
 def max_dot_product(a, b):
     """
@@ -30,8 +31,19 @@ def max_dot_product(a, b):
     for i in range(len(a)):
         res += a[i] * b[i]
     return res
+# write test_cases for max_dot_product(a, b)
+def test_max_dot_product():
+    """
+    Some test cases for max_dot_product(a, b).
+    """
+    assert max_dot_product([23], [39]) == 897
+    assert max_dot_product([1, 3, -5], [-2, 4, 1]) == 23
+    assert max_dot_product([1, 2, 3], [4, 5, 6]) == 32
+    print("Test cases passed...")
 
 if __name__ == '__main__':
+    if DEBUG:
+        test_max_dot_product()
     input = sys.stdin.read()
     data = list(map(int, input.split()))
     n = data[0]

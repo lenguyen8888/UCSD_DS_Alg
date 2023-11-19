@@ -1,5 +1,6 @@
 # Uses python3
 import sys
+DEBUG = False
 
 def get_change(m):
     """
@@ -49,8 +50,19 @@ def get_change(m):
         if m == 0:
             break
     return num_coins
+# implement test_cases for get_change(m)
+def test_get_change():
+    """
+    Some test cases for get_change(m).
+    """
+    assert get_change(2) == 2
+    assert get_change(28) == 6
+    assert get_change(0) == 0
+    print('Test passed')
 
 if __name__ == '__main__':
+    if DEBUG:
+        test_get_change()
     # read input from standard input
     m = int(sys.stdin.read())
     print(get_change(m))

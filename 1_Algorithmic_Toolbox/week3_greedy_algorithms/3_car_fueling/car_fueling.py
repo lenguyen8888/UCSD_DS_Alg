@@ -1,6 +1,7 @@
 # python3
 import sys
 
+DEBUG = False
 
 def compute_min_refills(distance, tank, stops):
     """
@@ -36,7 +37,20 @@ def compute_min_refills(distance, tank, stops):
             num_refills += 1
     return num_refills
 
+# write test_cases for compute_min_refills(distance, tank, stops)
+def test_compute_min_refills():
+    """
+    Some test cases for compute_min_refills(distance, tank, stops).
+    """
+    assert compute_min_refills(950, 400, [200, 375, 550, 750]) == 2
+    assert compute_min_refills(10, 3, [1, 2, 5, 9]) == -1
+    assert compute_min_refills(200, 250, [100, 150]) == 0
+    print("Test cases passed...")
+
 
 if __name__ == '__main__':
+    if DEBUG:
+        test_compute_min_refills()
+
     d, m, _, *stops = map(int, sys.stdin.read().split())
     print(compute_min_refills(d, m, stops))
