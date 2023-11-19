@@ -33,7 +33,7 @@ def largest_number(a):
     # where a and b are strings
     
     # concatenate the strings in the sorted list
-    def str_spec_cmp(a, b):
+    def str_cmp(a, b):
         """
         Custom str_spec_cmp function to compare two strings a and b.
         """
@@ -43,7 +43,7 @@ def largest_number(a):
             return 1
         else:
             return 0
-    sorted_a = sorted(a, key=functools.cmp_to_key(str_spec_cmp))
+    sorted_a = sorted(a, key=functools.cmp_to_key(str_cmp))
     return int(''.join(sorted_a))
 
 # write test_largest_number function from largest_number(a) doc
