@@ -26,13 +26,21 @@ def compute_min_refills(distance, tank, stops):
     num_refills = 0
     current_refill = 0
     n = len(stops)
+    # add the starting point and the destination to the list of stops
     stops = [0] + stops + [distance]
+
+    # iterate through the stops
     while current_refill <= n:
         last_refill = current_refill
+        # find the farthest stop that can be reached
         while current_refill <= n and stops[current_refill+1] - stops[last_refill] <= tank:
             current_refill += 1
+        # if the farthest stop that can be reached is the same as the last stop that can be reached
+        # then it is not possible to reach the destination
         if current_refill == last_refill:
             return -1
+        # if the farthest stop that can be reached is not the destination
+        # then increment the number of refills
         if current_refill <= n:
             num_refills += 1
     return num_refills
