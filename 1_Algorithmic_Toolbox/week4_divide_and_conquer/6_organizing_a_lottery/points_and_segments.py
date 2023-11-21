@@ -34,7 +34,8 @@ def fast_count_segments(starts, ends, points):
     for i in range(len(ends)):
         points_type.append((ends[i], 2, i))
     
-    # sort the points_type list by the first element of each point and then by the second element
+    # sort the points_type list by the first element of each
+    # point coordinate and then by the second element (type id, start, point, end)
     points_type.sort(key=lambda x: (x[0], x[1]))
   
     # count segments
