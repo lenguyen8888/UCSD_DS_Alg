@@ -2,11 +2,52 @@
 import sys
 import random
 
+DEBUG = False
+
 def partition3(a, l, r):
-    #write your code here
-    pass
+    """
+    Partitions the array 'a' into three parts based on a pivot element.
+    
+    Parameters:
+    a (list): The array to be partitioned.
+    l (int): The left index of the array.
+    r (int): The right index of the array.
+    
+    Returns:
+    tuple: A tuple containing the indices of the two partitions.
+    """
+    x = a[l]
+    lt = l
+    i = l
+    gt = r
+
+    while i <= gt:
+        if a[i] < x:
+            a[i], a[lt] = a[lt], a[i]
+            lt += 1
+            i += 1
+        elif a[i] > x:
+            a[i], a[gt] = a[gt], a[i]
+            gt -= 1
+        else:
+            i += 1
+
+    return lt, gt
+
 
 def partition2(a, l, r):
+    """
+    Partitions the array 'a' based on a pivot element and returns the index of the pivot element after partitioning.
+
+    Parameters:
+    a (list): The array to be partitioned.
+    l (int): The leftmost index of the subarray to be partitioned.
+    r (int): The rightmost index of the subarray to be partitioned.
+
+    Returns:
+    int: The index of the pivot element after partitioning.
+
+    """
     x = a[l]
     j = l
     for i in range(l + 1, r + 1):
@@ -27,10 +68,20 @@ def randomized_quick_sort(a, l, r):
     randomized_quick_sort(a, l, m - 1);
     randomized_quick_sort(a, m + 1, r);
 
+def randomized_quick_sort_3way(a, l, r):
+    if l >= r:
+        return
+    k = random.randint(l, r)
+    a[l], a[k] = a[k], a[l]
+    # use partition3
+    lt, gt = partition3(a, l, r)
+    randomized_quick_sort_3way(a, l, lt - 1)
+    randomized_quick_sort_3way(a, gt + 1, r)
+
 
 if __name__ == '__main__':
     input = sys.stdin.read()
     n, *a = list(map(int, input.split()))
-    randomized_quick_sort(a, 0, n - 1)
+    randomized_quick_sort_3way(a, 0, n - 1)
     for x in a:
         print(x, end=' ')
