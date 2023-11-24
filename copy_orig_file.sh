@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Copy .py files
-find . -type f -name "*.py" -exec cp {} {}.orig.py \;
-
-# Copy .java files
-find . -type f -name "*.java" -exec cp {} {}.orig.java \;
+# write a for loop to use find and copy sample.(java|py|cpp) to sample.(java|py|cpp).orig.(java|py|cpp)
+for ext in py cpp java; do
+    echo "Copying $ext files"
+    find . -type f -name "*.$ext" -exec cp {} {}.orig.$ext \;
+done
