@@ -111,7 +111,7 @@ if __name__ == '__main__':
     if DEBUG:
         test_get_pisano_period()
         test_get_fibonacci_huge_fast()
-    
-    input = sys.stdin.read();
-    n, m = map(int, input.split())
-    print(get_fib_mod_m(n, m))
+    else:
+        input = sys.stdin.read();
+        n, m = map(int, input.split())
+        print(get_fib_mod_m(n, m))

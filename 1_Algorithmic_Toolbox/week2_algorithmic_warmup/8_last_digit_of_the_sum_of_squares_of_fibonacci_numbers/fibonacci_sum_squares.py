@@ -1,5 +1,6 @@
 # Uses python3
 from sys import stdin
+DEBUG = False
 
 def fibonacci_sum_squares_naive(n):
     if n <= 1:
@@ -76,6 +77,18 @@ def fibonacci_sum_squares_fast(n):
     fib_n_plus_1 = fast_fib_last_digit(n + 1)
     return (fib_n * fib_n_plus_1) % 10
 
+# Write test code for fibonacci_sum_squares_fast(n)
+def test_fibonacci_sum_squares_fast():
+    """
+    Tests fibonacci_sum_squares_fast(n) using the examples from the docstring.
+    """
+    assert fibonacci_sum_squares_fast(7) == 3
+    assert fibonacci_sum_squares_fast(73) == 1
+    print('Test passed')
+
 if __name__ == '__main__':
-    n = int(stdin.read())
-    print(fibonacci_sum_squares_fast(n))
+    if DEBUG:
+        test_fibonacci_sum_squares_fast()
+    else:
+        n = int(stdin.read())
+        print(fibonacci_sum_squares_fast(n))

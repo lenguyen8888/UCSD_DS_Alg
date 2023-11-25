@@ -1,6 +1,7 @@
 # Uses python3
 import sys
-DEBUG = True
+DEBUG = False
+
 def fibonacci_sum_naive(n):
     if n <= 1:
         return n
@@ -86,7 +87,7 @@ def test_fibonacci_sum_fast():
 if __name__ == '__main__':
     if DEBUG:
         test_fibonacci_sum_fast()
-
-    input = sys.stdin.read()
-    n = int(input)
-    print(fibonacci_sum_fast(n))
+    else:
+        input = sys.stdin.read()
+        n = int(input)
+        print(fibonacci_sum_fast(n))

@@ -1,6 +1,6 @@
 # Uses python3
 import sys
-
+DEBUG = False
 def lcm_naive(a, b):
     for l in range(1, a*b + 1):
         if l % a == 0 and l % b == 0:
@@ -57,8 +57,18 @@ def lcm_fast(a, b):
     """
     return (a * b) // gcd_fast(a, b)
 
+# Write test cases
+def test_cases():
+    assert lcm_fast(6, 8) == 24
+    assert lcm_fast(18, 35) == 630
+    print('All test cases passed.')
+
+
 if __name__ == '__main__':
-    input = sys.stdin.read()
-    a, b = map(int, input.split())
-    print(lcm_fast(a, b))
+    if DEBUG:
+        test_cases()
+    else:
+        input = sys.stdin.read()
+        a, b = map(int, input.split())
+        print(lcm_fast(a, b))
 

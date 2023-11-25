@@ -1,5 +1,6 @@
 # Uses python3
 import sys
+DEBUG = False
 
 def get_fibonacci_last_digit_naive(n):
     if n <= 1:
@@ -45,8 +46,19 @@ def get_fib_last_digit_fast(n):
             fib_prev, fib_curr = fib_curr, (fib_prev + fib_curr) % 10
         return fib_curr
 
+# Write test cases
+def test_cases():
+    assert get_fib_last_digit_fast(3) == 2
+    assert get_fib_last_digit_fast(10) == 5
+    assert get_fib_last_digit_fast(331) == 9
+    assert get_fib_last_digit_fast(327305) == 5
+    print('All test cases passed.')
+
 
 if __name__ == '__main__':
-    input = sys.stdin.read()
-    n = int(input)
-    print(get_fib_last_digit_fast(n))
+    if DEBUG:
+        test_cases()
+    else:
+        input = sys.stdin.read()
+        n = int(input)
+        print(get_fib_last_digit_fast(n))

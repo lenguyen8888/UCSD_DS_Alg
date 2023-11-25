@@ -1,5 +1,6 @@
 # Uses python3
 import sys
+DEBUG = False
 
 def fibonacci_partial_sum_naive(from_, to):
     _sum = 0
@@ -88,8 +89,20 @@ def fibonacci_partial_sum_fast(from_, to):
     else:
         return (fast_fib_last_digit(to + 2) - fast_fib_last_digit(from_ + 1)) % 10
 
+# Write test code for fast_fib_last_digit(n)
+def test_fast_fib_last_digit():
+    """
+    Tests fast_fib_last_digit(n) using the examples from the docstring.
+    """
+    assert fast_fib_last_digit(3) == 2
+    assert fast_fib_last_digit(331) == 9
+    assert fast_fib_last_digit(327305) == 5
+    print('Test passed')
 
 if __name__ == '__main__':
-    input = sys.stdin.read();
-    from_, to = map(int, input.split())
-    print(fibonacci_partial_sum_fast(from_, to))
+    if DEBUG:
+        test_fast_fib_last_digit()
+    else:
+        input = sys.stdin.read();
+        from_, to = map(int, input.split())
+        print(fibonacci_partial_sum_fast(from_, to))

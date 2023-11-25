@@ -1,4 +1,6 @@
 # Uses python3
+DEBUG = False
+
 def calc_fib(n):
     """
     Calculates the nth Fibonacci number.
@@ -52,7 +54,17 @@ def calc_fib_fast(n):
         for i in range(2, n + 1):
             fib.append(fib[i - 1] + fib[i - 2])
         return fib[n]
+# Write test cases
+def test_cases():
+    assert calc_fib_fast(3) == 2
+    assert calc_fib_fast(10) == 55
+    assert calc_fib_fast(0) == 0
+    assert calc_fib_fast(1) == 1
+    print('All test cases passed.')
 
 if __name__ == '__main__':
-    n = int(input())
-    print(calc_fib_fast(n))
+    if DEBUG:
+        test_cases()
+    else:
+        n = int(input())
+        print(calc_fib_fast(n))
