@@ -58,18 +58,22 @@ def partition3_dp(arr):
                 # If it is possible to partition the first i - 1 elements of the array into three
                 dp[i][j][k] = dp[i - 1][j][k]
 
-                # If j >= arr[i - 1], then it is possible to partition the first i elements of the
+                # If j >= arr[i - 1], then it is possible to add the element at index i - 1 to the
+                # first subset with sum j
                 if j >= arr[i - 1]:
-                    # If it is possible to partition the first i - 1 elements of the array into
-                    # three subsets with sums j - arr[i - 1], k, and total_sum - j - k respectively
+                    # we can either have possible partitioning of the first i - 1 elements of the array
+                    # or we can add the element at index i - 1 to the smaller subset with sum j - arr[i - 1]
                     dp[i][j][k] = dp[i][j][k] or dp[i - 1][j - arr[i - 1]][k]
 
                 # similarly, if k >= arr[i - 1], then it is possible to partition the first i
                 if k >= arr[i - 1]:
-                    # If it is possible to partition the first i - 1 elements of the array into
-                    # three subsets with sums j, k - arr[i - 1], and total_sum - j - k respectively
+                    # we can either have possible partitioning of the first i - 1 elements of the array
+                    # or we can add the element at index i - 1 to the smaller subset with sum k - arr[i - 1]
                     dp[i][j][k] = dp[i][j][k] or dp[i - 1][j][k - arr[i - 1]]
 
+    # Check if it is possible to partition the array using the first n elements into three subsets
+    # with group sums == target (for j and k),
+    # the third group sum is total_sum - j - k == target too
     return dp[n][target][target], dp
 
 def partition_back(arr):
