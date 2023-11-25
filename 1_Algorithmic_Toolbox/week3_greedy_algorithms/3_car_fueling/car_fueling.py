@@ -59,6 +59,6 @@ def test_compute_min_refills():
 if __name__ == '__main__':
     if DEBUG:
         test_compute_min_refills()
-
-    d, m, _, *stops = map(int, sys.stdin.read().split())
-    print(compute_min_refills(d, m, stops))
+    else:
+        d, m, _, *stops = map(int, sys.stdin.read().split())
+        print(compute_min_refills(d, m, stops))

@@ -52,9 +52,10 @@ def test_cases():
 if __name__ == "__main__":
     if DEBUG:
         test_cases()
-    data = list(map(int, sys.stdin.read().split()))
-    n, capacity = data[0:2]
-    values = data[2:(2 * n + 2):2]
-    weights = data[3:(2 * n + 2):2]
-    opt_value = get_optimal_value(capacity, weights, values)
-    print("{:.4f}".format(opt_value))
+    else:
+        data = list(map(int, sys.stdin.read().split()))
+        n, capacity = data[0:2]
+        values = data[2:(2 * n + 2):2]
+        weights = data[3:(2 * n + 2):2]
+        opt_value = get_optimal_value(capacity, weights, values)
+        print("{:.4f}".format(opt_value))

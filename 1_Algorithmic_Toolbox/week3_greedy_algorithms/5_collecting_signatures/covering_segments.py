@@ -70,10 +70,10 @@ def test_optimal_points():
 if __name__ == '__main__':
     if DEBUG:
         test_optimal_points()
-
-    input = sys.stdin.read()
-    n, *data = map(int, input.split())
-    segments = list(map(lambda x: Segment(x[0], x[1]), zip(data[::2], data[1::2])))
-    points = optimal_points(segments)
-    print(len(points))
-    print(*points)
+    else:
+        input = sys.stdin.read()
+        n, *data = map(int, input.split())
+        segments = list(map(lambda x: Segment(x[0], x[1]), zip(data[::2], data[1::2])))
+        points = optimal_points(segments)
+        print(len(points))
+        print(*points)

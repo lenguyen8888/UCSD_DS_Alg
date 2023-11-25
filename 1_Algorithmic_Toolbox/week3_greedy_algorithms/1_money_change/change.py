@@ -63,6 +63,7 @@ def test_get_change():
 if __name__ == '__main__':
     if DEBUG:
         test_get_change()
-    # read input from standard input
-    m = int(sys.stdin.read())
-    print(get_change(m))
+    else:
+        # read input from standard input
+        m = int(sys.stdin.read())
+        print(get_change(m))

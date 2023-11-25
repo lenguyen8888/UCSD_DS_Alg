@@ -59,8 +59,9 @@ def test_largest_number():
 if __name__ == '__main__':
     if DEBUG:
         test_largest_number()
-    input = sys.stdin.read()
-    data = input.split()
-    a = data[1:]
-    print(largest_number(a))
+    else:
+        input = sys.stdin.read()
+        data = input.split()
+        a = data[1:]
+        print(largest_number(a))
     
