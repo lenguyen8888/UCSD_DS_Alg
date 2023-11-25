@@ -54,17 +54,18 @@ def test_cases():
 if __name__ == '__main__':
     if DEBUG:
         test_cases()
-    input = sys.stdin.read()
-    data = list(map(int, input.split()))
-    an = data[0]
-    data = data[1:]
-    a = data[:an]
-    data = data[an:]
-    bn = data[0]
-    data = data[1:]
-    b = data[:bn]
-    data = data[bn:]
-    cn = data[0]
-    data = data[1:]
-    c = data[:cn]
-    print(lcs3(a, b, c))
+    else:
+        input = sys.stdin.read()
+        data = list(map(int, input.split()))
+        an = data[0]
+        data = data[1:]
+        a = data[:an]
+        data = data[an:]
+        bn = data[0]
+        data = data[1:]
+        b = data[:bn]
+        data = data[bn:]
+        cn = data[0]
+        data = data[1:]
+        c = data[:cn]
+        print(lcs3(a, b, c))

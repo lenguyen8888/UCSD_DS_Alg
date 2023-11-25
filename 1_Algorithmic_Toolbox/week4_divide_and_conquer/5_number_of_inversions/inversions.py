@@ -1,4 +1,5 @@
 import sys
+DEBUG = False
 
 def get_number_of_inversions(a, b, left, right):
     """
@@ -51,9 +52,19 @@ def get_number_of_inversions(a, b, left, right):
     for i in range(left, right):
         a[i] = b[i]
     return number_of_inversions
+# write test cases for get_number_of_inversions(a, b, left, right)
+def test_cases():
+    assert get_number_of_inversions([2, 3, 9, 2, 9], [0, 0, 0, 0, 0], 0, 5) == 2
+    assert get_number_of_inversions([1, 2, 3, 4], [0, 0, 0, 0], 0, 4) == 0
+    assert get_number_of_inversions([1, 2, 3, 1], [0, 0, 0, 0], 0, 4) == 1
+    print("Test cases passed...")
+
 
 if __name__ == '__main__':
-    input = sys.stdin.read()
-    n, *a = list(map(int, input.split()))
-    b = n * [0]
-    print(get_number_of_inversions(a, b, 0, len(a)))
+    if DEBUG:
+        test_cases()
+    else:
+        input = sys.stdin.read()
+        n, *a = list(map(int, input.split()))
+        b = n * [0]
+        print(get_number_of_inversions(a, b, 0, len(a)))

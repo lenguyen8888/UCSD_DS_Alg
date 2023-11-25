@@ -68,9 +68,10 @@ def test_cases():
 if __name__ == '__main__':
     if (DEBUG):
         test_cases()
-    input = sys.stdin.read()
-    n = int(input)
-    sequence = list(optimal_sequence(n))
-    print(len(sequence) - 1)
-    for x in sequence:
-        print(x, end=' ')
+    else:
+        input = sys.stdin.read()
+        n = int(input)
+        sequence = list(optimal_sequence(n))
+        print(len(sequence) - 1)
+        for x in sequence:
+            print(x, end=' ')

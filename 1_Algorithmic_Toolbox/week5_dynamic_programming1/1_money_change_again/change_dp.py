@@ -51,5 +51,6 @@ def test_case():
 if __name__ == '__main__':
     if DEBUG:
         test_case()
-    m = int(sys.stdin.read())
-    print(get_change(m))
+    else:
+        m = int(sys.stdin.read())
+        print(get_change(m))

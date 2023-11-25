@@ -58,4 +58,5 @@ def test_cases():
 if __name__ == "__main__":
     if DEBUG:
         test_cases()
-    print(edit_distance(input(), input()))
+    else:
+        print(edit_distance(input(), input()))

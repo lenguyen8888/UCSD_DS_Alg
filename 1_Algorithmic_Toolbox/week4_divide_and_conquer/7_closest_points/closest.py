@@ -92,12 +92,12 @@ def test_cases():
 if __name__ == '__main__':
     if DEBUG:
         test_cases()
-
-    input = sys.stdin.read()
-    data = list(map(int, input.split()))
-    n = data[0]
-    x = data[1::2]
-    y = data[2::2]
-    # zip the x and y coordinates into a list of points
-    points = list(zip(x, y))
-    print("{0:.9f}".format(min_distance_dc(points)))
+    else:
+        input = sys.stdin.read()
+        data = list(map(int, input.split()))
+        n = data[0]
+        x = data[1::2]
+        y = data[2::2]
+        # zip the x and y coordinates into a list of points
+        points = list(zip(x, y))
+        print("{0:.9f}".format(min_distance_dc(points)))

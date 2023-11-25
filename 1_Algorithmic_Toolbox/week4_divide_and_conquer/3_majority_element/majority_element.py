@@ -33,9 +33,10 @@ def test_get_majority_element():
 if __name__ == '__main__':
     if DEBUG:
         test_get_majority_element()
-    input = sys.stdin.read()
-    n, *a = list(map(int, input.split()))
-    if get_majority_element(a, 0, n) != -1:
-        print(1)
     else:
-        print(0)
+        input = sys.stdin.read()
+        n, *a = list(map(int, input.split()))
+        if get_majority_element(a, 0, n) != -1:
+            print(1)
+        else:
+            print(0)

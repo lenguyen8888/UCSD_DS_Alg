@@ -37,7 +37,8 @@ def partition3(a, l, r):
 
 def partition2(a, l, r):
     """
-    Partitions the array 'a' based on a pivot element and returns the index of the pivot element after partitioning.
+    Partitions the array 'a' based on a pivot element and returns the index of
+    the pivot element after partitioning.
 
     Parameters:
     a (list): The array to be partitioned.
@@ -78,10 +79,21 @@ def randomized_quick_sort_3way(a, l, r):
     randomized_quick_sort_3way(a, l, lt - 1)
     randomized_quick_sort_3way(a, gt + 1, r)
 
+# write test_cases for randomized_quick_sort(a, l, r)
+# with duplicates in the array
+def test_cases():
+    assert randomized_quick_sort([2, 3, 9, 2, 2], 0, 4) == [2, 2, 2, 3, 9]
+    assert randomized_quick_sort([1, 2, 3, 4], 0, 3) == [1, 2, 3, 4]
+    assert randomized_quick_sort([1, 2, 3, 1], 0, 3) == [1, 1, 2, 3]
+    print("Test cases passed...")
+
 
 if __name__ == '__main__':
-    input = sys.stdin.read()
-    n, *a = list(map(int, input.split()))
-    randomized_quick_sort_3way(a, 0, n - 1)
-    for x in a:
-        print(x, end=' ')
+    if DEBUG:
+        test_cases()
+    else:
+        input = sys.stdin.read()
+        n, *a = list(map(int, input.split()))
+        randomized_quick_sort_3way(a, 0, n - 1)
+        for x in a:
+            print(x, end=' ')
