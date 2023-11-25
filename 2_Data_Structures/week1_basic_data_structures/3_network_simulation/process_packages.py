@@ -67,9 +67,15 @@ def process_requests(requests, buffer):
 # write test_cases
 def test_cases():
     assert process_requests([], Buffer(1)) == []
-    assert process_requests([Request(0, 0)], Buffer(1)) == [Response(was_dropped=False, started_at=0)]
-    assert process_requests([Request(0, 1), Request(0, 1)], Buffer(1)) == [Response(was_dropped=False, started_at=0), Response(was_dropped=True, started_at=-1)]
-    assert process_requests([Request(0, 1), Request(1, 1)], Buffer(1)) == [Response(was_dropped=False, started_at=0), Response(was_dropped=False, started_at=1)]
+    
+    assert process_requests([Request(0, 0)], Buffer(1)) == \
+        [Response(was_dropped=False, started_at=0)]
+    
+    assert process_requests([Request(0, 1), Request(0, 1)], Buffer(1)) == \
+        [Response(was_dropped=False, started_at=0), Response(was_dropped=True, started_at=-1)]
+    
+    assert process_requests([Request(0, 1), Request(1, 1)], Buffer(1)) == \
+        [Response(was_dropped=False, started_at=0), Response(was_dropped=False, started_at=1)]
     print('All test cases passed.')
 
 

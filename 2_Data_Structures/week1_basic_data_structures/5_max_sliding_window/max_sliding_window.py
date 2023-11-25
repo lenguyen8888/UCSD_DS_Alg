@@ -22,19 +22,36 @@ def max_sliding_window_optimized(sequence, m):
     maximums = []
     stack = []
     for i in range(m):
+        # This loop is O(m) because
+        # each element is pushed and popped at most once.
+
+        # remove all elements smaller than the current element
         while stack and sequence[i] >= sequence[stack[-1]]:
             stack.pop()
+        # add the current element to the stack
         stack.append(i)
+    # add the maximum of the first window to the maximums list
+    # for the 1st window, the maximum is the first element in the stack
     maximums.append(sequence[stack[0]])
 
     for i in range(m, n):
+        # Each iteration is O(1) because 
+        # each element is pushed and popped at most once.
+
+        # remove all elements smaller than the current element
+        # from the tail of the stack
         while stack and sequence[i] >= sequence[stack[-1]]:
             stack.pop()
+        # remove the elements that are outside the current window
         if stack and stack[0] <= i - m:
             stack.pop(0)
+        # add the current element to the stack
         stack.append(i)
+        # add the maximum of the current window to the maximums list
         maximums.append(sequence[stack[0]])
 
+    # Overall, the time complexity is O(n) because
+    # each element is pushed and popped at most once.
     return maximums
 
 # write test_cases
