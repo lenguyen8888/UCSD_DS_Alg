@@ -104,4 +104,5 @@ def test_cases():
 if __name__ == "__main__":
     if DEBUG:
         test_cases()
-    print(get_maximum_value(input()))
+    else:
+        print(get_maximum_value(input()))

@@ -52,6 +52,7 @@ def test_cases():
 if __name__ == '__main__':
     if DEBUG:
         test_cases()
-    input = sys.stdin.read()
-    W, n, *w = list(map(int, input.split()))
-    print(optimal_weight(W, w))
+    else:
+        input = sys.stdin.read()
+        W, n, *w = list(map(int, input.split()))
+        print(optimal_weight(W, w))
