@@ -56,6 +56,8 @@ def partition3_dp(arr):
         for j in range(target + 1):
             for k in range(target + 1):
                 # If it is possible to partition the first i - 1 elements of the array into three
+                # This is true since we can just ignore the ith element and pick the partitioning
+                # of the first i - 1 elements
                 dp[i][j][k] = dp[i - 1][j][k]
 
                 # If j >= arr[i - 1], then it is possible to add the element at index i - 1 to the
