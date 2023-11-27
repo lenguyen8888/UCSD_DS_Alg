@@ -19,11 +19,13 @@ def cmpAssignedJob(job1, job2):
     Returns:
     int: 1 if job1 > job2, 0 if job1 == job2, -1 if job1 < job2
     """
+    # Compare the started_at attribute
     if job1.started_at > job2.started_at:
         return 1
     elif job1.started_at < job2.started_at:
         return -1
     else:
+        # if the started_at attributes are equal, compare the worker attribute
         if job1.worker > job2.worker:
             return 1
         elif job1.worker < job2.worker:
