@@ -51,11 +51,11 @@ def heapify(data, n, i):
         right = 2 * i + 2
 
         # Check if left child is smaller than current smallest
-        if left < n and cmpAssignedJob(data[left], data[smallest]) < 0:
+        if left < n and cmpAssignedJob(data[smallest], data[left]) > 0:
             smallest = left
 
         # Check if right child is smaller than current smallest
-        if right < n and cmpAssignedJob(data[right], data[smallest]) < 0:
+        if right < n and cmpAssignedJob(data[smallest], data[right]) > 0:
             smallest = right
 
         # If the smallest is not the current node, swap it with the smallest child
@@ -91,14 +91,15 @@ def assign_jobs(n_workers, jobs):
     for job in jobs:
         # The root of the heap is the next free worker
         next_worker = workers[0]
+        # Add the next job to the result
+        result.append(next_worker)
         # Update the started_at attribute of the next free worker
         next_worker = AssignedJob(next_worker.worker, next_worker.started_at + job)
         # Replace the root of the heap with the updated next_worker
         workers[0] = next_worker
         # Heapify the heap
         heapify(workers, n_workers, 0)
-        # Add the next job to the result
-        result.append(next_worker)
+        
     return result
 
 # write test_cases
