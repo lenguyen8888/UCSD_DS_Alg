@@ -85,6 +85,28 @@ def assign_jobs(n_workers, jobs):
         , AssignedJob(worker=0, started_at=1)
         , AssignedJob(worker=1, started_at=2)
         , AssignedJob(worker=0, started_at=4)]
+        >>> assign_jobs(4, [1] * 20)
+        [AssignedJob(worker=0, started_at=0)
+        , AssignedJob(worker=1, started_at=0)
+        , AssignedJob(worker=2, started_at=0)
+        , AssignedJob(worker=3, started_at=0)
+        , AssignedJob(worker=0, started_at=1)
+        , AssignedJob(worker=1, started_at=1)
+        , AssignedJob(worker=2, started_at=1)
+        , AssignedJob(worker=3, started_at=1)
+        , AssignedJob(worker=0, started_at=2)
+        , AssignedJob(worker=1, started_at=2)
+        , AssignedJob(worker=2, started_at=2)
+        , AssignedJob(worker=3, started_at=2)
+        , AssignedJob(worker=0, started_at=3)
+        , AssignedJob(worker=1, started_at=3)
+        , AssignedJob(worker=2, started_at=3)
+        , AssignedJob(worker=3, started_at=3)
+        , AssignedJob(worker=0, started_at=4)
+        , AssignedJob(worker=1, started_at=4)
+        , AssignedJob(worker=2, started_at=4)
+        , AssignedJob(worker=3, started_at=4)]
+
     """
     result = []
     # Create a list of n_workers AssignedJob objects with worker = index and started_at = 0
@@ -106,7 +128,36 @@ def assign_jobs(n_workers, jobs):
 
 # write test_cases
 def test_cases():
-    assert assign_jobs(2, [1, 2, 3, 4, 5]) == [AssignedJob(worker=0, started_at=0), AssignedJob(worker=1, started_at=0), AssignedJob(worker=0, started_at=1), AssignedJob(worker=1, started_at=2), AssignedJob(worker=0, started_at=4)]
+    assert assign_jobs(2, [1, 2, 3, 4, 5]) == \
+        [AssignedJob(worker=0, started_at=0)
+        , AssignedJob(worker=1, started_at=0)
+        , AssignedJob(worker=0, started_at=1)
+        , AssignedJob(worker=1, started_at=2)
+        , AssignedJob(worker=0, started_at=4)]
+    assert assign_jobs(4, [1] * 20) == \
+        [AssignedJob(worker=0, started_at=0)
+        , AssignedJob(worker=1, started_at=0)
+        , AssignedJob(worker=2, started_at=0)
+        , AssignedJob(worker=3, started_at=0)
+        
+        , AssignedJob(worker=0, started_at=1)
+        , AssignedJob(worker=1, started_at=1)
+        , AssignedJob(worker=2, started_at=1)
+        , AssignedJob(worker=3, started_at=1)
+        
+        , AssignedJob(worker=0, started_at=2)
+        , AssignedJob(worker=1, started_at=2)
+        , AssignedJob(worker=2, started_at=2)
+        , AssignedJob(worker=3, started_at=2)
+        , AssignedJob(worker=0, started_at=3)
+        , AssignedJob(worker=1, started_at=3)
+        , AssignedJob(worker=2, started_at=3)
+        , AssignedJob(worker=3, started_at=3)
+        
+        , AssignedJob(worker=0, started_at=4)
+        , AssignedJob(worker=1, started_at=4)
+        , AssignedJob(worker=2, started_at=4)
+        , AssignedJob(worker=3, started_at=4)]
     print('All test cases passed.')
 
 
