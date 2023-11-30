@@ -48,15 +48,30 @@ class Solver:
 def test_cases():
 	# test case 1
 	solver = Solver('trololo')
+	# substrings of s[0:7] == 'trololo' and s[0:7] =='trololo'
 	assert(solver.ask(0, 0, 7) == True)
+
+	# substrings of s[2:5] == 'olo' and s[3:6] == 'olo'
 	assert(solver.ask(2, 4, 3) == True)
+
+	# substrings of s[3:4] == 'l' and s[5:6] == 'l'
 	assert(solver.ask(3, 5, 1) == True)
+
+	# substrings of s[1:3] == 'ro' and s[3:5] == 'ol'
 	assert(solver.ask(1, 3, 2) == False)
+	
 	# test case 2
 	solver = Solver('abacaba')
+	# substrings of s[0:7] == 'abacaba' and s[0:7] =='abacaba'
 	assert(solver.ask(0, 0, 7) == True)
+
+	# substrings of s[0:1] == 'a' and s[1:2] == 'b'
 	assert(solver.ask(0, 1, 1) == False)
+
+	# substrings of s[0:2] == 'ab' and s[4:6] == 'ab'
 	assert(solver.ask(0, 4, 2) == True)
+
+	# substrings of s[0:3] == 'aba' and s[1:4] == 'bac'
 	assert(solver.ask(0, 1, 3) == False)
 	print("test_cases() passed")
 
